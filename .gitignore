@@ -4,10 +4,12 @@
 *.exe
 *.amx
 
+components/
 filterscripts/
 include/
 npcmodes/
 pawno/
+qawno/
 
 plugins/
 
@@ -20,4 +22,4 @@ log.txt
 
 omp-server
 
-*.cfg
+*.pdb
