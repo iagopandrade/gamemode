@@ -10,6 +10,7 @@ include/
 npcmodes/
 pawno/
 qawno/
+*.ini
 
 plugins/
 
