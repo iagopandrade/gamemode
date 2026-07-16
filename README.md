@@ -17,8 +17,6 @@
 
 ## 📖 Sobre
 
-## 📖 Sobre
-
 O **BPC Players' Community (BPC)** é um projeto open source que busca recriar a experiência clássica do Brasil Project City utilizando tecnologias modernas do **open.mp**.
 
 O projeto foi desenvolvido com foco em código limpo, arquitetura modular e facilidade de manutenção, permitindo que a comunidade contribua com novas funcionalidades e melhorias.
@@ -166,7 +164,7 @@ A prioridade é:
 
 ---
 
-## ❤️ Contribuidores
+## 👽 Contribuidores
 
 - [Kaleo](https://github.com/kaleoberserk)
 - [Iago](https://github.com/iagopandrade/gamemode)
@@ -191,4 +189,4 @@ Agradecemos a todos os programadores do Brasil Project City que mantiveram aquel
 
 ## 📜 Licença
 
-Este projeto está licenciado sob a **The Unlicense**, permitindo uso, modificação e distribuição sem restrições. Consulte o arquivo `LICENSE` para mais informações.i
+Este projeto está licenciado sob a **The Unlicense**, permitindo uso, modificação e distribuição sem restrições. Consulte o arquivo `LICENSE` para mais informações.
