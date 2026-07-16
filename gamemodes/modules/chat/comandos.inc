@@ -1,3 +1,14 @@
+CMD:limparchat(playerid, params[])
+{	
+	for (new i; i != 17; i++) {
+        SendClientMessage(playerid, -1, "");
+	}
+
+    return 1;
+}
+
+alias:limparchat("lc", "limpar", "clear")
+
 CMD:me(playerid, params[])
 {
 	if (isnull(params))
@@ -12,6 +23,7 @@ CMD:me(playerid, params[])
 	SendClientMessageToAll(0xC2A2DAFF, string);
 	return 1;
 }
+
 CMD:do(playerid, params[])
 {
 	if (isnull(params))

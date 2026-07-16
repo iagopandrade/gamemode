@@ -1,8 +1,12 @@
 #include <open.mp>
-#include <sscanf2>
-#include <streamer>
-#include <pawn.cmd>
-#include <dof2.1>
+
+#include "includes\sscanf2.inc"
+#include "includes\streamer.inc"
+#include "includes\Pawn.CMD.inc"
+#include "includes\DOF2.1.inc"
+#include "includes/YSI-Includes\YSI_Coding\y_hooks.inc"
+#include "includes/YSI-Includes\YSI_Data\y_iterate.inc"
+#include "includes\easyDialog.inc"
 
 #include "modules/core/colors.inc"
 
@@ -14,10 +18,20 @@
 #include "modules/player/fome.inc"
 #include "modules/player/payday.inc"
 #include "modules/player/comandos.inc"
+#include "modules/player/death/death.inc"
+#include "modules/player/death/commands.inc"
 
+#include "modules/chat/chat.inc"
 #include "modules/chat/comandos.inc"
 
+#include "modules/animation/comandos.inc"
+
 #include "modules/veiculo/comandos.inc"
+
+#include "modules/company/company.inc"
+#include "modules/company/binco.inc"
+#include "modules/company/gym.inc"
+#include "modules/company/sexy_shop.inc"
 
 #include "modules/empregos/comandos.inc"
 #include "modules/empregos/pizza/pizza.inc"
@@ -25,46 +39,47 @@
 
 #include "modules/economia/comandos.inc"
 
+#include "modules/audio/musica_login.inc"
+
 forward AtualizarSistema();
 
-main()
+main() 
 {
-
+	printf("%d", 20 + 20 + 20 + 7);
 }
 
 public OnGameModeInit()
 {
-	SetGameModeText("Blank Script");
-	AddPlayerClass(0, 1685.8695, -2241.0386, -2.6973, 179.8575, 0, 0, 0, 0, 0, 0);
+	SetGameModeText("Text Based Roleplay");
+	AddPlayerClass(0, 1685.8695, -2241.0386, -2.6973, 179.8575, WEAPON_FIST, 0, WEAPON_FIST, 0, WEAPON_FIST, 0);
 	DisableInteriorEnterExits();
 	LogoServidor = TextDrawCreate(320.0, 20.0, "Brasil City");
-    TextDrawFont(LogoServidor, 3);
+    TextDrawFont(LogoServidor, TEXT_DRAW_FONT_3);
     TextDrawLetterSize(LogoServidor, 0.7, 3.0);
-    TextDrawColor(LogoServidor, 0x006400FF);
+    TextDrawColour(LogoServidor, 0x006400FF);
     TextDrawSetOutline(LogoServidor, 1);
     TextDrawSetShadow(LogoServidor, 0);
-    TextDrawAlignment(LogoServidor, 2);
-    TextDrawUseBox(LogoServidor, 0);
+    TextDrawAlignment(LogoServidor, TEXT_DRAW_ALIGN_CENTER);
+    TextDrawUseBox(LogoServidor, false);
 
     // TextDraw Fome e Sede - Canto inferior direito (pequeno)
 	TDFome = TextDrawCreate(550.0, 420.0, "Fome: 100");
-	TextDrawFont(TDFome, 1);
+	TextDrawFont(TDFome, TEXT_DRAW_FONT_1);
 	TextDrawLetterSize(TDFome, 0.22, 1.0);
-	TextDrawColor(TDFome, 0xFFA500FF);
+	TextDrawColour(TDFome, 0xFFA500FF);
 	TextDrawSetOutline(TDFome, 1);
 	TextDrawSetShadow(TDFome, 0);
-	TextDrawAlignment(TDFome, 3);
+	TextDrawAlignment(TDFome, TEXT_DRAW_ALIGN_RIGHT);
 
 	TDSede = TextDrawCreate(550.0, 435.0, "Sede: 100");
-	TextDrawFont(TDSede, 1);
+	TextDrawFont(TDSede, TEXT_DRAW_FONT_1);
 	TextDrawLetterSize(TDSede, 0.22, 1.0);
-	TextDrawColor(TDSede, 0x00BFFFFF);
+	TextDrawColour(TDSede, 0x00BFFFFF);
 	TextDrawSetOutline(TDSede, 1);
 	TextDrawSetShadow(TDSede, 0);
-	TextDrawAlignment(TDSede, 3);
+	TextDrawAlignment(TDSede, TEXT_DRAW_ALIGN_RIGHT);
 
 	SetTimer("AtualizarFomeSede", 85000, true); // 85 segundos
-
 
 	SetTimer("AtualizarSistema", 60000, true);
 
@@ -91,7 +106,6 @@ public OnGameModeInit()
 
 	CreatePickup(1274, 1, 2315.8311, -10.0434, 26.7422);
 	CreateDynamic3DTextLabel("Balcao do Banco\n{FFFFFF}Use /banco aqui", 0xFFFF00FF, 2315.8311, -10.0434, 27.2422, 20.0);
-
 	return 1;
 }
 
@@ -103,9 +117,18 @@ public OnGameModeExit()
 
 public OnPlayerRequestClass(playerid, classid)
 {
-	SetSpawnInfo(playerid, 0, 0, 1685.8695, -2241.0386, -2.6973, 179.8575, 0, 0, 0, 0, 0, 0);
-	SpawnPlayer(playerid);
+	if (IsPlayerNPC(playerid)) {
+		return 1;
+	}
+   
+    TogglePlayerSpectating(playerid, true);
+
 	return 1;
+}
+
+public OnPlayerRequestSpawn(playerid)
+{
+    return 0;
 }
 
 public OnPlayerConnect(playerid)
@@ -118,9 +141,11 @@ public OnPlayerConnect(playerid)
 	Sede[playerid] = 100;
 
 	if (fexist(UserPath(playerid)))
-		ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login - {00FF00}BRASIL PROJETO CITY", "Esta conta ja existe.\nDigite sua senha para entrar:", "Entrar", "Sair");
+		ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login - {00FF00}BRASIL CITY", "Esta conta ja existe.\nDigite sua senha para entrar:", "Entrar", "Sair");
 	else
-		ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Login - {00FF00}BRASIL PROJETO CITY", "Esta conta nao existe.\nDigite uma senha para cria-la:", "Registrar", "Sair");
+		ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Login - {00FF00}BRASIL CITY", "Esta conta nao existe.\nDigite uma senha para cria-la:", "Registrar", "Sair");
+
+	TocarMusicaLogin(playerid);
 	return 1;
 }
 
@@ -128,6 +153,7 @@ public OnPlayerDisconnect(playerid, reason)
 {
 	if (IsLoggedIn[playerid])
 	{
+		PararMusicaLogin(playerid);   // ← Adicione esta linha
 		SalvarConta(playerid);
 	}
 	return 1;
@@ -143,6 +169,11 @@ public OnPlayerSpawn(playerid)
 	{
 		SetPlayerSkin(playerid, SkinSalva[playerid]);
 	}
+
+	ApplyAnimation(playerid, "PED", "IDLE", 4.1, false, false, false, false, false, SYNC_ALL);
+	ClearAnimations(playerid, SYNC_ALL);
+	ApplyAnimation(playerid, "ped", "XPRESSscratch", 4.1, false, false, false, true, SYNC_ALL);
+	ClearAnimations(playerid, SYNC_ALL);
 	return 1;
 }
 
@@ -272,10 +303,20 @@ public OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys)
 
 public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-	if (dialogid == DIALOG_LOGIN)
-	{
-		if (!response) { Kick(playerid); return 1; }
-		if (isnull(inputtext)) { ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login - {00FF00}BRASIL PROJETO CITY", "{FF0000}Senha invalida.\nDigite sua senha para entrar:", "Entrar", "Sair"); return 1; }
+	if (dialogid == DIALOG_LOGIN) {
+		if (!response) {
+			Kick(playerid); 
+			return 1;
+		}
+
+		if (isnull(inputtext)) {
+			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, 
+				"Login - {00FF00}BRASIL CITY", 
+				"{FF0000}Senha invalida.\nDigite sua senha para entrar:", 
+				"Entrar", "Sair"
+			);
+			return 1; 
+		}
 
 		new File:conta = fopen(UserPath(playerid), io_read);
 		new linhaSenha[64], linhaAdmin[64], linhaSkin[64], linhaDinheiro[64], linhaNivel[64], linhaTempo[64], linhaPayday[64], linhaProfissao[64], linhaBanco[64], linhaX[64], linhaY[64], linhaZ[64], linhaInterior[64], linhaFome[64], linhaSede[64];
@@ -297,14 +338,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		fread(conta, linhaSede);
 		fclose(conta);
 
-		if (strval(linhaSenha) == HashSenha(inputtext))
-		{
+		if (strval(linhaSenha) == HashSenha(inputtext)) {
 			IsLoggedIn[playerid] = true;
+			TocarMusicaLogin(playerid);
 			SenhaHash[playerid] = strval(linhaSenha);
 			AdminLevel[playerid] = strval(linhaAdmin);
 
 			SkinSalva[playerid] = strval(linhaSkin);
-			SetPlayerSkin(playerid, SkinSalva[playerid]);
 			ResetPlayerMoney(playerid);
 			GivePlayerMoney(playerid, strval(linhaDinheiro));
 
@@ -316,7 +356,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			MinutosPayday[playerid] = strval(linhaPayday);
 			Profissao[playerid] = strval(linhaProfissao);
 			SaldoBanco[playerid] = strval(linhaBanco);
-
+            PararMusicaLogin(playerid);
 			UltimaPosX[playerid] = floatstr(linhaX);
 			UltimaPosY[playerid] = floatstr(linhaY);
 			UltimaPosZ[playerid] = floatstr(linhaZ);
@@ -335,13 +375,22 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			TextDrawShowForPlayer(playerid, LogoEstrelaDireita);
 			TextDrawShowForPlayer(playerid, TDFome);
 			TextDrawShowForPlayer(playerid, TDSede);
+			
+			SetSpawnInfo(playerid, NO_TEAM, SkinSalva[playerid], 1683.0283, -2242.7976, -2.6917, 176.9883, WEAPON_FIST, 0, WEAPON_FIST, 0, WEAPON_FLOWER, 1);
+			TogglePlayerSpectating(playerid, false);
+			SpawnPlayer(playerid);
 
-			SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Login efetuado com sucesso!");
-			SendClientMessage(playerid, 0xFFFF00FF, "Use /carregarp para voltar ao local onde estava antes de sair.");
-		}
-		else
-		{
-			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", "{FF0000}Senha incorreta.\nDigite sua senha para entrar:", "Entrar", "Sair");
+			SendClientMessage(playerid, 0xF7D358FF, "__________________________________________________________");
+			SendClientMessage(playerid, 0x2ECC71FF, "{2ECC71}B{27AE60}r{2ECC71}a{27AE60}s{2ECC71}i{27AE60}l {F1C40F}C{F39C12}i{F1C40F}t{F39C12}y {FFFFFF}Roleplay");
+			SendClientMessage(playerid, 0xFFFFFFFF, "{00FF7F}| {FFFFFF}Login efetuado com sucesso! Seja bem-vindo ao {F1C40F}Brasil City{FFFFFF}.");
+			SendClientMessage(playerid, 0xFFFFFFFF, "{00BFFF}i {FFFFFF}O servidor encontra-se em fase {F39C12}Pre-Alpha{FFFFFF} e recebe atualizacoes diariamente.");
+			SendClientMessage(playerid, 0xFFFFFFFF, "{FFD700}* {FFFFFF}Nosso objetivo eh reviver o {2ECC71}Roleplay Text-Based{FFFFFF} que marcou a comunidade em {2ECC71}2019{FFFFFF}.");
+			SendClientMessage(playerid, 0xFFFFFFFF, "{9B59B6}| {FFFFFF}Sua participacao faz diferenca! Envie sugestoes e reporte bugs em nosso {5865F2}Discord{FFFFFF}.");
+			SendClientMessage(playerid, 0xFFFFFFFF, "{1ABC9C}| {FFFFFF}Para parar a musica utilize o comando {F1C40F}/pararmusica{FFFFFF}.");
+			SendClientMessage(playerid, 0xFFFFFFFF, "{3498DB}-> {FFFFFF}Use {F1C40F}/carregarp {FFFFFF}para retornar ao local onde estava antes de desconectar.");
+			SendClientMessage(playerid, 0xF7D358FF, "__________________________________________________________");
+		} else {
+			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login - BRASIL CITY", "{FF0000}Senha incorreta.\nDigite sua senha para entrar:", "Entrar", "Sair");
 		}
 		return 1;
 	}
@@ -405,16 +454,39 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		return 1;
 	}
 
-	if (dialogid == DIALOG_REGISTER)
-	{
-		if (!response) { Kick(playerid); return 1; }
-		if (isnull(inputtext)) { ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registro", "Digite uma senha valida para criar sua conta:", "Registrar", "Sair"); return 1; }
+	if (dialogid == DIALOG_REGISTER) {
+		if (!response) {
+			Kick(playerid);
+			return 1;
+		}
+		if (isnull(inputtext)) {
+			ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, 
+				"Registro",
+				"Digite uma senha valida para criar sua conta:",
+				"Registrar", "Sair"
+			); 
+	        return 1;
+		}
 
 		SenhaHash[playerid] = HashSenha(inputtext);
 		AdminLevel[playerid] = 0;
 		SkinAtual[playerid] = 1;
 		SetPlayerSkin(playerid, 1);
 		MostrarSkin(playerid);
+
+		SetSpawnInfo(playerid, NO_TEAM, SkinSalva[playerid], 1683.0283, -2242.7976, -2.6917, 176.9883, WEAPON_FIST, 0, WEAPON_FIST, 0, WEAPON_FLOWER, 1);
+		TogglePlayerSpectating(playerid, false);
+		SpawnPlayer(playerid);
+
+		SendClientMessage(playerid, 0xF7D358FF, "__________________________________________________________");
+		SendClientMessage(playerid, 0x2ECC71FF, "{2ECC71}B{27AE60}r{2ECC71}a{27AE60}s{2ECC71}i{27AE60}l {F1C40F}C{F39C12}i{F1C40F}t{F39C12}y {FFFFFF}Roleplay");
+		SendClientMessage(playerid, 0xFFFFFFFF, "{00FF7F}| {FFFFFF}Conta registrada com sucesso! Seja bem-vindo ao {F1C40F}Brasil City{FFFFFF}.");
+		SendClientMessage(playerid, 0xFFFFFFFF, "{00BFFF}i {FFFFFF}O servidor encontra-se em fase {F39C12}Pre-Alpha{FFFFFF} e recebe atualizacoes diariamente.");
+		SendClientMessage(playerid, 0xFFFFFFFF, "{FFD700}* {FFFFFF}Nosso objetivo eh reviver o {2ECC71}Roleplay Text-Based{FFFFFF} que marcou a comunidade em {2ECC71}2019{FFFFFF}.");
+		SendClientMessage(playerid, 0xFFFFFFFF, "{9B59B6}| {FFFFFF}Sua participacao faz diferenca! Envie sugestoes e reporte bugs em nosso {5865F2}Discord{FFFFFF}.");
+		SendClientMessage(playerid, 0xFFFFFFFF, "{1ABC9C}| {FFFFFF}Para parar a musica utilize o comando {F1C40F}/pararmusica{FFFFFF}.");
+		SendClientMessage(playerid, 0xFFFFFFFF, "{3498DB}-> {FFFFFF}Use {F1C40F}/carregarp {FFFFFF}para retornar ao local onde estava antes de desconectar.");
+		SendClientMessage(playerid, 0xF7D358FF, "__________________________________________________________");
 		return 1;
 	}
 
@@ -502,3 +574,29 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     }
 	return 1;
 }
+
+CMD:pararmusica(playerid, params[])
+{
+	StopAudioStreamForPlayer(playerid);
+	SendClientMessage(playerid, -1, "Musica parada.");
+	return 1;
+}
+
+/**
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢛⢄⠍⣴⣿⣿⣿⣿⣿⣿⣿⡿⢿⠍⠙⠻⠻⢿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠑⢀⡂⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣤⣤⣄⣀⣐⠘⠂⠘⠀⢈⠉⠭⠩⢽
+⣿⣿⣿⣿⣿⣿⣿⠟⠑⣡⢔⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⢢⢖⣼⣿
+⣿⣿⣿⣿⣿⣿⢑⢄⡼⣱⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠑⠀⢡⣾⣿
+⣿⣿⣿⣿⡿⠃⢔⣵⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠐⡐⣼⣿⣿⣿
+⣿⣿⣿⡿⠂⣪⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢏⠠⣢⣾⣿⣿⣿⣿
+⣿⣿⣟⠠⣰⣿⠿⠟⠛⡛⠛⠻⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠡⡐⣷⣿⣿⣿⣿⣿⣿
+⣿⡟⠂⠘⣡⣴⣾⣾⣿⣿⣿⣷⣶⣦⡐⢄⠭⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣻⠂⢄⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⠁⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⢱⠈⡾⣹⣿⣿⣿⣿⣿⣛⣛⢛⢛⠫⠃⠴⡾⠿⠿⣿⣿⣿⣿⣿⣿
+⡿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⢴⢷⣿⣿⣿⣿⣿⣷⣶⣶⢴⠆⢲⣶⣤⣬⣭⣽⣿⣿⣿⣿⣿
+⡇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠠⠄⢫⣿⣿⣿⣿⣿⣿⣿⠯⠍⢼⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣧⠊⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢣⠐⡔⢸⣿⣿⣿⣿⣿⣿⡟⢜⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⡔⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣡⢎⢄⣶⣿⣿⣿⣿⣿⣿⣿⡇⡬⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣔⢄⠛⢿⣿⣿⣿⣿⣿⡿⢛⡵⡊⣠⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⢰⡀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣷⣤⣒⠢⠬⣍⣚⣒⠬⣐⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⢡⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀
+ */
