@@ -32,6 +32,8 @@
 #include "modules/company/binco.inc"
 #include "modules/company/gym.inc"
 #include "modules/company/sexy_shop.inc"
+#include "modules/company/pizzeria.inc"
+#include "modules/company/bank.inc"
 
 #include "modules/empregos/comandos.inc"
 #include "modules/empregos/pizza/pizza.inc"
@@ -89,8 +91,8 @@ public OnGameModeInit()
 	CreatePickup(1210, 1, -2033.1250, -117.3180, 1035.1719);
     CreateDynamic3DTextLabel("Catalogo de Empregos\n{FFFFFF}Aperte F", 0xFFFF00FF, -2033.1250, -117.3180, 1035.6719, 20.0);///agencia de emprego
 
-	CreatePickup(1318, 0, 2104.9644,-1806.5123,13.5547); // troque 1210 pelo icone que quiser (ver lista de pickups)
-    CreateDynamic3DTextLabel("Pizzaria\n{FFFFFF}Aperte F para entrar", 0xFFFF00FF, 2104.9644,-1806.5123,13.5547 + 0.5, 20.0); 
+	// CreatePickup(1318, 0, 2104.9644,-1806.5123,13.5547); // troque 1210 pelo icone que quiser (ver lista de pickups)
+    // CreateDynamic3DTextLabel("Pizzaria\n{FFFFFF}Aperte F para entrar", 0xFFFF00FF, 2104.9644,-1806.5123,13.5547 + 0.5, 20.0); 
 
 	CreatePickup(1212, 1, 375.7113,-119.2369,1001.4995);
 	CreateDynamic3DTextLabel("Balcao de Atendimento\n{FFFFFF}Aperte F para acessar o menu de pedido", 0xFFFF00FF, 375.7113,-119.2369,1001.4995 + 0.5, 20.0);
@@ -101,8 +103,8 @@ public OnGameModeInit()
 	CreatePickup(1318, 1, GaragemPizzaPos[0], GaragemPizzaPos[1], GaragemPizzaPos[2]);
 	CreateDynamic3DTextLabel("Garagem do Pizzaiolo\n{FFFFFF}Aperte F para spawnar sua Faggio", 0xFFFF00FF, GaragemPizzaPos[0], GaragemPizzaPos[1], GaragemPizzaPos[2]+0.5, 15.0);
 
-	CreatePickup(1210, 0, 1467.2704, -1011.1876, 26.8438);
-    CreateDynamic3DTextLabel("Banco\n{FFFFFF}Aperte F para entrar", 0xFFFF00FF, 1467.2704, -1011.1876, 27.3438, 20.0);
+	// CreatePickup(1210, 0, 1467.2704, -1011.1876, 26.8438);
+    // CreateDynamic3DTextLabel("Banco\n{FFFFFF}Aperte F para entrar", 0xFFFF00FF, 1467.2704, -1011.1876, 27.3438, 20.0);
 
 	CreatePickup(1274, 1, 2315.8311, -10.0434, 26.7422);
 	CreateDynamic3DTextLabel("Balcao do Banco\n{FFFFFF}Use /banco aqui", 0xFFFF00FF, 2315.8311, -10.0434, 27.2422, 20.0);
@@ -278,23 +280,6 @@ public OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys)
 			PutPlayerInVehicle(playerid, FaggioVeiculo[playerid], 0);
 
 			SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Faggio spawnada! Use /rotapizza quando estiver pronto.");
-			return 1;
-		}
-
-		// Entrada do BANCO
-		if (!DentroBanco[playerid] && IsPlayerInRangeOfPoint(playerid, 2.0, BancoEntradaPos[0], BancoEntradaPos[1], BancoEntradaPos[2]))
-		{
-			SetPlayerPos(playerid, BancoInternoPos[0], BancoInternoPos[1], BancoInternoPos[2]);
-			DentroBanco[playerid] = true;
-			SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Voce entrou no Banco. Use /banco para acessar sua conta, ou /sairbanco para sair.");
-			return 1;
-		}
-		// Saida do BANCO com F
-		if (DentroBanco[playerid] && IsPlayerInRangeOfPoint(playerid, 2.0, SaidaBancoPos[0], SaidaBancoPos[1], SaidaBancoPos[2]))
-		{
-			SetPlayerPos(playerid, BancoEntradaPos[0], BancoEntradaPos[1], BancoEntradaPos[2]);
-			DentroBanco[playerid] = false;
-			SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Voce saiu do Banco.");
 			return 1;
 		}
 	}

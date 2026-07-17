@@ -12,7 +12,9 @@
 enum {
     BINCO_DOWNTOWN,
     GYM_GANTON,
-    SEXY_SHOP
+    SEXY_SHOP,
+    PIZZERIA,
+    BANK_LOS_SANTOS
 };
 
 enum e_COMPANY_POINT_TYPE
@@ -45,7 +47,8 @@ enum e_COMPANY_POINT_DATA
     POINT_EXTRA_DATA
 };
 
-enum e_WORLD_AREA_DATA {
+enum e_WORLD_AREA_DATA
+{
     WORLD_AREA_COMPANY,
     WORLD_AREA_POINT
 }
@@ -72,7 +75,9 @@ enum e_COMPANY_TYPE
     COMPANY_TYPE_CLOTHES,
     COMPANY_TYPE_AMMUNATION,
     COMPANY_TYPE_GYM,
-    COMPANY_TYPE_SEXY_SHOP
+    COMPANY_TYPE_SEXY_SHOP,
+    COMPANY_TYPE_RESTAURANT,
+    COMPANY_TYPE_BANK
 };
 
 enum e_COMPANY_AREA_TYPE
@@ -422,6 +427,8 @@ hook OnGameModeInit@5()
     LoadSkins();
     GymGantonInit();
     SexyShop_Init();
+    PizzeriaGantonInit();
+    BankInit();
 }
 
 hook OnPlayerConnect@1(playerid)
