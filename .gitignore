@@ -12,6 +12,8 @@ pawno/
 qawno/
 *.ini
 
+logs/
+
 plugins/
 
 *.so

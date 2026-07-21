@@ -1,3 +1,30 @@
+static LastCommand[MAX_PLAYERS];
+
+public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
+{
+    if (IsPlayerLogged(playerid)) {
+		GameTextForPlayer(playerid, "Voce precisa estar logado.", 3000, 3);
+        return 0;
+    }
+
+	if (GetTickCount() - LastCommand[playerid] < 500) {
+		GameTextForPlayer(playerid, "Aguarde o comando atual terminar.", 3000, 3);
+        return 0;
+    }
+
+    LastCommand[playerid] = GetTickCount();
+    return 1;
+}
+
+public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
+{
+	if (result == -1) {
+		GameTextForPlayer(playerid, "~r~Comando inexistente", 3000, 3);
+	}
+    return 1;
+}
+
+/*
 CMD:stats(playerid, params[])
 {
 	new nome[MAX_PLAYER_NAME];
@@ -26,18 +53,13 @@ CMD:stats(playerid, params[])
 	ShowPlayerDialog(playerid, DIALOG_STATS, DIALOG_STYLE_MSGBOX, "{FFFF00}Estatisticas", string, "Fechar", "");
 	return 1;
 }
+*/
 
-CMD:carregarp(playerid, params[])
+CMD:money(playerid, params[])
 {
-	if (!IsLoggedIn[playerid]) { SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce precisa estar logado."); return 1; }
-	if (UltimaPosX[playerid] == 0.0 && UltimaPosY[playerid] == 0.0 && UltimaPosZ[playerid] == 0.0)
-	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Nao ha nenhuma posicao salva ainda.");
-		return 1;
-	}
-
-	SetPlayerInterior(playerid, UltimoInterior[playerid]);
-	SetPlayerPos(playerid, UltimaPosX[playerid], UltimaPosY[playerid], UltimaPosZ[playerid]);
-	SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Voce foi levado de volta ao local onde estava antes de sair.");
+	GivePlayerMoney(playerid, 10000);
+	new Float:x, Float:y, Float:z;
+	GetPlayerPos(playerid, x, y, z);
+	PlayerPlaySound(playerid, 5405, x, y, z);
 	return 1;
 }

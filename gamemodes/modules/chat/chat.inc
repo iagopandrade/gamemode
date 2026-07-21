@@ -19,7 +19,7 @@
 
 public OnPlayerText(playerid, text[])
 {
-    if (!IsLoggedIn[playerid]) {
+    if (IsPlayerLogged(playerid)) {
         GameTextForPlayer(playerid, "~r~Voce nao esta logado!", 3000, 3);
         return 0;
     }
@@ -53,20 +53,18 @@ static TalkMessage(Float:dist, playerid, const prefix[], message[])
             duration = TALK_ANIM_MAX_TIME;
         }
 
-		/*
         ApplyAnimation(
             playerid,
             "PED",
             "IDLE_CHAT",
             4.1,
             false,
-            true,
-            true,
+            false,
+            false,
             false,
             duration,
             SYNC_ALL
         );
-		*/
 
 		GetPlayerName(playerid, PlayerName, sizeof(PlayerName));
 		if (strlen(prefix)) {
