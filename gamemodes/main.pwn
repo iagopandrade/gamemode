@@ -11,11 +11,12 @@
 
 #include "modules/core/colors.inc"
 
-/*
+#include "modules/player/player.inc"
+
+#include "modules/character/character.inc"
+
 #include "modules/account/account.inc"
 #include "modules/account/dialogs.inc"
-*/
-#include "modules/account/login.inc"
 
 /*
 #include "modules/admin/admin.inc"

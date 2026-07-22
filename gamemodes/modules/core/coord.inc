@@ -6,3 +6,7 @@ enum e_COORD_DATA {
     E_COORD_INTERIOR,
     E_COORD_VIRTUAL_WORLD
 }
+
+/*
+    Esqueci o contexto disso, mas era algo muito bom - iago
+*/

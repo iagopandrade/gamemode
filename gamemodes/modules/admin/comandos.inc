@@ -1,25 +1,3 @@
-CMD:tpbinco(playerid, params[])
-{
-	if (AdminLevel[playerid] < LEVEL_HELPER) {
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce nao tem permissao para usar este comando.");
-		return 1;
-	}
-
-	SetPlayerPos(playerid, 2244.9133, -1664.3789, 15.4766);
-	SetPlayerFacingAngle(playerid, 347.1557);
-	return 1;
-}
-
-CMD:tpconfig(playerid, params[])
-{
-	if (AdminLevel[playerid] < LEVEL_HELPER) { SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce nao tem permissao para usar este comando."); return 1; }
-
-	SetPlayerInterior(playerid, 0);
-	SetPlayerPos(playerid, 1467.2704,-1011.1876,26.8438 + 1.0);
-	SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Voce foi teleportado com sucesso!");
-	return 1;
-}
-
 CMD:achat(playerid, params[])
 {
 	if (AdminLevel[playerid] < LEVEL_HELPER) { SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce nao tem permissao para usar este comando."); return 1; }

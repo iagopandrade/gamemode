@@ -42,7 +42,7 @@ CMD:b(playerid, params[])
 {
 	if (isnull(params))
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Uso: /b [mensagem]");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Uso: /b [mensagem]");
 		return 1;
 	}
 
@@ -58,19 +58,19 @@ CMD:pm(playerid, params[])
 
 	if (sscanf(params, "us[128]", id, mensagem))
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Uso: /pm [id] [mensagem]");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Uso: /pm [id] [mensagem]");
 		return 1;
 	}
 
 	if (!IsPlayerConnected(id))
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Jogador nao conectado.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Jogador nao conectado.");
 		return 1;
 	}
 
 	if (id == playerid)
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce nao pode mandar PM para si mesmo.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Voce nao pode mandar PM para si mesmo.");
 		return 1;
 	}
 
@@ -92,19 +92,19 @@ CMD:su(playerid, params[])
 
 	if (sscanf(params, "us[128]", id, mensagem))
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Uso: /su [id] [mensagem]");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Uso: /su [id] [mensagem]");
 		return 1;
 	}
 
 	if (!IsPlayerConnected(id))
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Jogador nao conectado.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Jogador nao conectado.");
 		return 1;
 	}
 
 	if (id == playerid)
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce nao pode sussurrar para si mesmo.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Voce nao pode sussurrar para si mesmo.");
 		return 1;
 	}
 
@@ -113,7 +113,7 @@ CMD:su(playerid, params[])
 
 	if (!IsPlayerInRangeOfPoint(id, 3.0, x, y, z))
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Esse jogador esta longe demais para sussurrar.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Esse jogador esta longe demais para sussurrar.");
 		return 1;
 	}
 

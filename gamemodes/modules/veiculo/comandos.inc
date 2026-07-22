@@ -2,13 +2,13 @@ CMD:motor(playerid, params[])
 {
 	if (!IsPlayerInAnyVehicle(playerid))
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce precisa estar dentro de um veiculo.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Voce precisa estar dentro de um veiculo.");
 		return 1;
 	}
 
 	if (GetPlayerVehicleSeat(playerid) != 0)
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce precisa estar no banco do motorista.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Voce precisa estar no banco do motorista.");
 		return 1;
 	}
 
@@ -35,13 +35,13 @@ CMD:farol(playerid, params[])
 {
 	if (!IsPlayerInAnyVehicle(playerid))
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce precisa estar dentro de um veiculo.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Voce precisa estar dentro de um veiculo.");
 		return 1;
 	}
 
 	if (GetPlayerVehicleSeat(playerid) != 0)
 	{
-		SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce precisa estar no banco do motorista.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Voce precisa estar no banco do motorista.");
 		return 1;
 	}
 
@@ -53,8 +53,8 @@ CMD:farol(playerid, params[])
 	SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 
 	if (lights)
-		SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Voce ligou os farois do veiculo.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Voce ligou os farois do veiculo.");
 	else
-		SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Voce desligou os farois do veiculo.");
+		SendClientMessage(playerid, GENERAL_COLOR, "[BC:RP] Voce desligou os farois do veiculo.");
 	return 1;
 }

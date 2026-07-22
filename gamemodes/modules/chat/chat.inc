@@ -19,7 +19,7 @@
 
 public OnPlayerText(playerid, text[])
 {
-    if (IsPlayerLogged(playerid)) {
+    if (!HasPlayerLogged(playerid)) {
         GameTextForPlayer(playerid, "~r~Voce nao esta logado!", 3000, 3);
         return 0;
     }
