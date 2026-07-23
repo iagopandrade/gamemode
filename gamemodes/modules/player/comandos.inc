@@ -3,7 +3,11 @@ static LastCommand[MAX_PLAYERS];
 public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 {
     if (!HasPlayerLogged(playerid)) {
-		GameTextForPlayer(playerid, "Voce precisa estar logado.", 3000, 3);
+		GameTextForPlayer(
+			playerid,
+			"~r~ERRO~n~~w~Voce NAO esta logado!",
+			5000, 16
+		);
         return 0;
     }
 

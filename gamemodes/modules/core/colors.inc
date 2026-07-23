@@ -13,6 +13,7 @@
 #define COLOR_PINK              (0xFFAEC9FF)
 #define COLOR_PURPLE            (0xC2A2DAAA)
 #define COLOR_RED               (0xFF0000FF)
+#define COLOR_SOFT_YELLOW       (0xF7D358FF)
 #define COLOR_SPRINGGREEN       (0x00FF7FFF)
 #define COLOR_SUNFLOWER         (0xF1C40FFF)
 #define COLOR_WHITE             (0xFFFFFFFF)

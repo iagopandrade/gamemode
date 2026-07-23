@@ -1,13 +1,17 @@
 #include <open.mp>
 
-#include "includes\sscanf2.inc"
-#include "includes\streamer.inc"
-#include "includes\Pawn.CMD.inc"
-#include "includes/YSI-Includes\YSI_Coding\y_hooks.inc"
-#include "includes/YSI-Includes\YSI_Data\y_iterate.inc"
-#include "includes\easyDialog.inc"
-#include "includes\a_mysql.inc"
-#include "includes\whirlpool.inc"
+#include <sscanf2>
+#include <streamer>
+#include <Pawn.CMD>
+#include <YSI_Coding\y_hooks>
+#include <YSI_Data\y_iterate>
+#include <easyDialog>
+#include <a_mysql>
+#include <whirlpool>
+#include <WeatherSystem>
+
+#include <gametext_plus>
+#define OVERRIDE_NATIVE_GAMETEXT
 
 #include "modules/core/colors.inc"
 
@@ -18,10 +22,8 @@
 #include "modules/account/account.inc"
 #include "modules/account/dialogs.inc"
 
-/*
 #include "modules/admin/admin.inc"
 #include "modules/admin/comandos.inc"
-*/
 
 /*
 #include "modules/player/fome.inc"
@@ -38,12 +40,15 @@
 
 #include "modules/veiculo/comandos.inc"
 
+/*
 #include "modules/company/company.inc"
 #include "modules/company/binco.inc"
 #include "modules/company/gym.inc"
 #include "modules/company/sexy_shop.inc"
 #include "modules/company/pizzeria.inc"
 #include "modules/company/bank.inc"
+*/
+#include "modules/time/time.inc"
 
 /*
 #include "modules/empregos/comandos.inc"
@@ -59,10 +64,12 @@ forward AtualizarSistema();
 
 main() 
 {
-	print("----------------------------------------");
-	print("      Gamemode Iniciada!                ");
-    print(" 	BPC Player's Community open.mp 2026");
-	print("----------------------------------------");
+	print("\n");
+	print("  |---------------------------------------------------");
+	print("  |--- BPC Player's Community");
+    print("  |--  Script v0.0.0");
+    print("  |--  23 de Julho de 2026");
+	print("  |---------------------------------------------------");
 }
 
 /*

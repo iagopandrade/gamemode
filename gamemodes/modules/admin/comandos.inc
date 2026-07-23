@@ -1,3 +1,4 @@
+/*
 CMD:achat(playerid, params[])
 {
 	if (AdminLevel[playerid] < LEVEL_HELPER) { SendClientMessage(playerid, COR_BCRP_ERRO, "[BC:RP] Voce nao tem permissao para usar este comando."); return 1; }
@@ -401,13 +402,10 @@ CMD:forcarpayday(playerid, params[])
 	SendClientMessage(playerid, COR_BCRP_INFO, "[BC:RP] Payday forcado para todos os jogadores online.");
 	return 1;
 }
+*/
 
 CMD:veiculo(playerid, params[])
 {
-	if (AdminLevel[playerid] < LEVEL_GAMEADMIN) {
-		return 0;
-	}
-
 	new vehicleid;
     if (sscanf(params, "k<vehicle>", vehicleid)) {
 		SendClientMessage(playerid, -1, "/veiculo <id>");

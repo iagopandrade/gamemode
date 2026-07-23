@@ -485,3 +485,4 @@ hook OnPlayerEnterDynamicArea(playerid, STREAMER_TAG_AREA:areaid)
     @@@@@@@@@@@@@@@@@@@@@@@@@@@                                                                                              
     +@@@@@@@@@@@@@@@@@@@@@@@=
  */
+ 

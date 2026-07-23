@@ -20,14 +20,17 @@
 public OnPlayerText(playerid, text[])
 {
     if (!HasPlayerLogged(playerid)) {
-        GameTextForPlayer(playerid, "~r~Voce nao esta logado!", 3000, 3);
+		GameTextForPlayer(
+			playerid,
+			"~r~AVISO~n~~w~Voce precisa estar~n~logado para enviar mensagens!",
+			10000, 16
+		);
         return 0;
     }
 
     new string[128];
     format(string, sizeof(string), "%.128s", text);
     TalkMessage(TALK_DISTANCE, playerid, "", string);
-
     return 0;
 }
 

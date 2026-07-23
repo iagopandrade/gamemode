@@ -1,3 +1,5 @@
+#include <YSI_Coding\y_hooks>
+
 #define MYSQL_HOST              "127.0.0.1"
 #define MYSQL_USER              "root"
 #define MYSQL_PASS              ""
@@ -36,7 +38,7 @@ public OnGameModeExit()
     return 1;
 }
 
-hook OnPlayerConnect@2(playerid)
+hook OnPlayerConnect(playerid)
 {
     SetPlayerLogged(playerid, false);
     SetPlayerLoginAttempts(playerid, 0);
@@ -170,17 +172,17 @@ stock OnLoginSuccess(playerid)
 
     SpawnPlayerFromAccount(playerid);
 
-    SendClientMessage(playerid, 0xF7D358FF, "__________________________________________________________");
+    SendClientMessage(playerid, COLOR_SOFT_YELLOW, "__________________________________________________________");
     SendClientMessage(playerid, COLOR_EMERALD,
         EMBED_EMERALD "B" EMBED_NEPHRITE "P" EMBED_EMERALD "C " EMBED_NEPHRITE "P" EMBED_EMERALD "l" EMBED_NEPHRITE "a" EMBED_EMERALD "y" EMBED_NEPHRITE "e" EMBED_EMERALD "r" EMBED_NEPHRITE "'" EMBED_EMERALD "s " EMBED_SUNFLOWER "C" EMBED_ORANGE "o" EMBED_SUNFLOWER "m" EMBED_ORANGE "m" EMBED_SUNFLOWER "u" EMBED_ORANGE "n" EMBED_SUNFLOWER "i" EMBED_ORANGE "t" EMBED_SUNFLOWER "y"
     );
     SendClientMessage(playerid, COLOR_WHITE, 
         EMBED_SPRINGGREEN "| " EMBED_WHITE "Login efetuado com sucesso! Seja bem-vindo ao " EMBED_SUNFLOWER "BPC Player's Community" EMBED_WHITE "."
     );
-    SendClientMessage(playerid, 0xFFFFFFFF, "{00BFFF}i {FFFFFF}O servidor encontra-se em fase {F39C12}Pre-Alpha{FFFFFF} e recebe atualizacoes diariamente.");
-    SendClientMessage(playerid, 0xFFFFFFFF, "{FFD700}* {FFFFFF}Nosso objetivo eh reviver o {2ECC71}Roleplay Text-Based{FFFFFF} que marcou a comunidade em {2ECC71}2019{FFFFFF}.");
-    SendClientMessage(playerid, 0xFFFFFFFF, "{9B59B6}| {FFFFFF}Sua participacao faz diferenca! Envie sugestoes e reporte bugs em nosso {5865F2}Discord{FFFFFF}.");
-    SendClientMessage(playerid, 0xF7D358FF, "__________________________________________________________");
+    SendClientMessage(playerid, COLOR_WHITE, "{00BFFF}i {FFFFFF}O servidor encontra-se em fase {F39C12}Pre-Alpha{FFFFFF} e recebe atualizacoes diariamente.");
+    SendClientMessage(playerid, COLOR_WHITE, "{FFD700}* {FFFFFF}Nosso objetivo eh reviver o {2ECC71}Roleplay Text-Based{FFFFFF} que marcou a comunidade em {2ECC71}2019{FFFFFF}.");
+    SendClientMessage(playerid, COLOR_WHITE, "{9B59B6}| {FFFFFF}Sua participacao faz diferenca! Envie sugestoes e reporte bugs em nosso {5865F2}Discord{FFFFFF}.");
+    SendClientMessage(playerid, COLOR_SOFT_YELLOW, "__________________________________________________________");
     return 1;
 }
 
@@ -269,7 +271,8 @@ stock CreatePlayerAccount(playerid)
 
     mysql_format(g_SQL, query, sizeof(query),
         "INSERT INTO `players` (`name`, `password`, `ip`, `cash`, `score`) VALUES ('%e', '%e', '%e', 0, 0)",
-        playerName, s_AccountPasswordHash[playerid], ipHash);
+        playerName, s_AccountPasswordHash[playerid], ipHash
+    );
 
     mysql_tquery(g_SQL, query, "OnAccountRegistered", "d", playerid);
     return 1;
@@ -325,7 +328,8 @@ stock SavePlayerAccount(playerid)
         GetPlayerInterior(playerid),
         GetPlayerVirtualWorld(playerid),
         posX, posY, posZ, posA,
-        s_AccountData[playerid][E_ACCOUNT_ID]);
+        s_AccountData[playerid][E_ACCOUNT_ID]
+    );
 
     mysql_tquery(g_SQL, query);
     return 1;
@@ -440,12 +444,12 @@ public OnAccountRegistered(playerid)
 
     SpawnPlayerFromAccount(playerid);
 
-    SendClientMessage(playerid, 0xF7D358FF, "__________________________________________________________");
+    SendClientMessage(playerid, COLOR_SOFT_YELLOW, "__________________________________________________________");
     SendClientMessage(playerid, 0x2ECC71FF, "{2ECC71}B{27AE60}P{2ECC71}C {27AE60}P{2ECC71}l{27AE60}a{2ECC71}y{27AE60}e{2ECC71}r{27AE60}'{2ECC71}s {F1C40F}C{F39C12}o{F1C40F}m{F39C12}m{F1C40F}u{F39C12}n{F1C40F}i{F39C12}t{F1C40F}y");
-    SendClientMessage(playerid, 0xFFFFFFFF, "{00FF7F}| {FFFFFF}Conta registrada com sucesso! Seja bem-vindo ao {F1C40F}BPC Player's Community{FFFFFF}.");
-    SendClientMessage(playerid, 0xFFFFFFFF, "{00BFFF}i {FFFFFF}O servidor encontra-se em fase {F39C12}Pre-Alpha{FFFFFF} e recebe atualizacoes diariamente.");
-    SendClientMessage(playerid, 0xFFFFFFFF, "{FFD700}* {FFFFFF}Nosso objetivo eh reviver o {2ECC71}Roleplay Text-Based{FFFFFF} que marcou a comunidade em {2ECC71}2019{FFFFFF}.");
-    SendClientMessage(playerid, 0xFFFFFFFF, "{9B59B6}| {FFFFFF}Sua participacao faz diferenca! Envie sugestoes e reporte bugs em nosso {5865F2}Discord{FFFFFF}.");
-    SendClientMessage(playerid, 0xF7D358FF, "__________________________________________________________");
+    SendClientMessage(playerid, COLOR_WHITE, "{00FF7F}| {FFFFFF}Conta registrada com sucesso! Seja bem-vindo ao {F1C40F}BPC Player's Community{FFFFFF}.");
+    SendClientMessage(playerid, COLOR_WHITE, "{00BFFF}i {FFFFFF}O servidor encontra-se em fase {F39C12}Pre-Alpha{FFFFFF} e recebe atualizacoes diariamente.");
+    SendClientMessage(playerid, COLOR_WHITE, "{FFD700}* {FFFFFF}Nosso objetivo eh reviver o {2ECC71}Roleplay Text-Based{FFFFFF} que marcou a comunidade em {2ECC71}2019{FFFFFF}.");
+    SendClientMessage(playerid, COLOR_WHITE, "{9B59B6}| {FFFFFF}Sua participacao faz diferenca! Envie sugestoes e reporte bugs em nosso {5865F2}Discord{FFFFFF}.");
+    SendClientMessage(playerid, COLOR_SOFT_YELLOW, "__________________________________________________________");
     return 1;
 }

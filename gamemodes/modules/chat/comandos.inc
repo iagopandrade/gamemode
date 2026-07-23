@@ -1,9 +1,8 @@
 CMD:limparchat(playerid, params[])
 {	
-	for (new i; i != 17; i++) {
-        SendClientMessage(playerid, -1, "");
+	for (new i = 0; i <= 17; i++) {
+        SendClientMessage(playerid, -1, " ");
 	}
-
     return 1;
 }
 
@@ -11,9 +10,12 @@ alias:limparchat("lc", "limpar", "clear")
 
 CMD:me(playerid, params[])
 {
-	if (isnull(params))
-	{
-		SendClientMessage(playerid, -1, "Uso: /me [acao]");
+	if (isnull(params)) {
+		GameTextForPlayer(
+			playerid,
+			"~g~DICA~n~~w~Use /me <texto>",
+			5000, 16
+		);
 		return 1;
 	}
 

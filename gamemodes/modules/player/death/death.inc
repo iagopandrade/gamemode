@@ -1,3 +1,5 @@
+#include <YSI_Coding\y_hooks>
+
 #define DEATH_TIME             (180)
 #define REANIMATE_DISTANCE     (3.0)
 
