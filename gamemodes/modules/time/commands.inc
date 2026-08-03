@@ -1,3 +1,9 @@
+#if defined _INC_time_commands
+	#endinput
+#endif
+#define _INC_time_commands
+
+flags:setartempo(CMD_ADMIN)
 CMD:setartempo(playerid, params[])
 {
     new hour, minute;
@@ -14,13 +20,15 @@ CMD:setartempo(playerid, params[])
     }
 
     SetServerTime(hour, minute);
-
+    
     foreach (new i : Player) {
         SetPlayerTime(i, hour, minute);
     }
     return 1;
 }
+alias:setartempo("st")
 
+flags:setarclima(CMD_ADMIN)
 CMD:setarclima(playerid, params[])
 {
     new clima;
@@ -34,8 +42,10 @@ CMD:setarclima(playerid, params[])
         return 1;
     }
 
-    foreach (new i : Player) {
-        SetPlayerWeather(playerid, clima);
-    }
+    SetWeather(clima);
+    // foreach (new i : Player) {
+    //     SetPlayerWeather(playerid, clima);
+    // }
     return 1;
 }
+alias:setarclima("sc")

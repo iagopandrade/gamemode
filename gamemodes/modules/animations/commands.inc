@@ -1,29 +1,43 @@
+#if defined _INC_animations_commands
+	#endinput
+#endif
+#define _INC_animations_commands
+
+flags:animacoes(CMD_ALIVE)
 CMD:animacoes(playerid, params[])
 {
-	SendClientMessage(playerid, -1, "/stopanim, /handup, /drink, /falar, /faca, /crack");
+	SendClientMessage(playerid, GENERAL_COLOR, "_________________________________________________");
+	SendClientMessage(playerid, GENERAL_COLOR, "/pararanimacao, /render, /drink, /falar, /faca, /crack");
+	SendClientMessage(playerid, GENERAL_COLOR, "_________________________________________________");
 	return 1;
 }
 
-CMD:stopanim(playerid, params[])
+flags:pararanimacao(CMD_ALIVE)
+CMD:pararanimacao(playerid, params[])
 {
 	if (ClearAnimations(playerid)) {
 		GameTextForPlayer(playerid, "~r~Voce interrompeu a animacao!", 3000, 3);
 	}
 	return 1;
 }
+alias:pararanimacao("pa", "stopanim")
 
-CMD:handup(playerid, params[])
+flags:handsup(CMD_ALIVE)
+CMD:handsup(playerid, params[])
 {
 	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_HANDSUP);
     return 1;
 }
+alias:handsup("render")
 
+flags:drink(CMD_ALIVE)
 CMD:drink(playerid, params[])
 {
 	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_BEER);
     return 1;
 }
 
+flags:falar(CMD_ALIVE)
 CMD:falar(playerid, params[])
 {
     ApplyAnimation(
@@ -41,10 +55,10 @@ CMD:falar(playerid, params[])
 	return 1;
 }
 
+flags:faca(CMD_ALIVE)
 CMD:faca(playerid, params[])
 {
     new type;
-
 	if (sscanf(params, "d", type)) {
 		GameTextForPlayer(playerid, "~r~Uso: /faca <1-8>", 3000, 3);
 		return 1;
@@ -65,14 +79,13 @@ CMD:faca(playerid, params[])
 		case 7: { ApplyAnimation(playerid, "KNIFE", "KILL_Knife_Ped_Damage", 4.1, false, false, false, false, 0, SYNC_ALL); }
 		case 8: { ApplyAnimation(playerid, "KNIFE", "KILL_Knife_Ped_Die", 4.1, false, false, false, false, 0, SYNC_ALL); }
 	}
-
 	return 1;
 }
 
+flags:crack(CMD_ALIVE)
 CMD:crack(playerid, params[])
 {
     new type;
-
 	if (sscanf(params, "d", type)) {
 		GameTextForPlayer(playerid, "~r~Uso: /crack <1-10>", 3000, 3);
 		return 1;
@@ -95,6 +108,5 @@ CMD:crack(playerid, params[])
 		case 9: { ApplyAnimation(playerid, "CRACK", "crckidle3", 3.33, false, false, false, false, 0, SYNC_ALL); }
 		case 10: { ApplyAnimation(playerid, "CRACK", "crckidle4", 2.67, false, false, false, false, 0, SYNC_ALL); }
 	}
-	
 	return 1;
 }

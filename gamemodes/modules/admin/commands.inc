@@ -11,11 +11,11 @@ stock static ConnectedPlayerMessage(playerid, targetid)
 	return 0;
 }
 
-flags:achat(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
-CMD:achat(playerid, params[])
+flags:chatadmin(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
+CMD:chatadmin(playerid, params[])
 {
 	if (isnull(params)) {
-		SendClientMessage(playerid, GENERAL_COLOR, "SYNTAX: /achat <mensagem>");
+		SendClientMessage(playerid, GENERAL_COLOR, "SYNTAX: /chatadmin <mensagem>");
 		return 1;
 	}
 
@@ -25,6 +25,7 @@ CMD:achat(playerid, params[])
 	SendClientMessageToAll(GENERAL_COLOR, "%s: %s", name, params);
 	return 1;
 }
+alias:chatadmin("ca")
 
 flags:servico(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:servico(playerid, params[])

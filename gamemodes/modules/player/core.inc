@@ -5,9 +5,10 @@
 
 enum (<<= 1)
 {
-  CMD_ADMIN = 1, // 0b00000000000000000000000000000001
-  CMD_MODER,     // 0b00000000000000000000000000000010
-  CMD_JR_MODER   // 0b00000000000000000000000000000100
+  CMD_ADMIN = 1, //  0b00000000000000000000000000000001
+  CMD_MODER,     //  0b00000000000000000000000000000010
+  CMD_JR_MODER,   // 0b00000000000000000000000000000100
+  CMD_ALIVE   //  0b00000000000000000000000000001000
 };
 
 static enum e_PLAYER_DATA
@@ -30,17 +31,11 @@ stock SetPlayerLogged(playerid, bool:status = false)
         return 0;
     }
     s_PlayerData[playerid][E_PLAYER_LOGGED] = status;
-    AddPlayerPermissons(playerid);
-    return 1;
-}
 
-stock static AddPlayerPermissons(playerid)
-{
-    switch (GetAccountAdminLevel(playerid)) {
-        case 3: AddPermission(playerid, CMD_ADMIN);
-        case 2: AddPermission(playerid, CMD_MODER);
-        case 1: AddPermission(playerid, CMD_JR_MODER);
-    }
+    AddPermission(playerid, CMD_ADMIN);
+    AddPermission(playerid, CMD_MODER);
+    AddPermission(playerid, CMD_JR_MODER);
+    AddPermission(playerid, CMD_ALIVE);
     return 1;
 }
 
