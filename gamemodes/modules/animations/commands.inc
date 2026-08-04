@@ -3,7 +3,7 @@
 #endif
 #define _INC_animations_commands
 
-flags:animacoes(CMD_ALIVE)
+flags:animacoes(CMD_ALIVE | CMD_LOGGED)
 CMD:animacoes(playerid, params[])
 {
 	SendClientMessage(playerid, GENERAL_COLOR, "_________________________________________________");
@@ -12,7 +12,7 @@ CMD:animacoes(playerid, params[])
 	return 1;
 }
 
-flags:pararanimacao(CMD_ALIVE)
+flags:pararanimacao(CMD_ALIVE | CMD_LOGGED)
 CMD:pararanimacao(playerid, params[])
 {
 	if (ClearAnimations(playerid)) {
@@ -22,7 +22,7 @@ CMD:pararanimacao(playerid, params[])
 }
 alias:pararanimacao("pa", "stopanim")
 
-flags:handsup(CMD_ALIVE)
+flags:handsup(CMD_ALIVE | CMD_LOGGED)
 CMD:handsup(playerid, params[])
 {
 	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_HANDSUP);
@@ -30,14 +30,14 @@ CMD:handsup(playerid, params[])
 }
 alias:handsup("render")
 
-flags:drink(CMD_ALIVE)
+flags:drink(CMD_ALIVE | CMD_LOGGED)
 CMD:drink(playerid, params[])
 {
 	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_BEER);
     return 1;
 }
 
-flags:falar(CMD_ALIVE)
+flags:falar(CMD_ALIVE | CMD_LOGGED)
 CMD:falar(playerid, params[])
 {
     ApplyAnimation(
@@ -55,7 +55,7 @@ CMD:falar(playerid, params[])
 	return 1;
 }
 
-flags:faca(CMD_ALIVE)
+flags:faca(CMD_ALIVE | CMD_LOGGED)
 CMD:faca(playerid, params[])
 {
     new type;
@@ -82,7 +82,7 @@ CMD:faca(playerid, params[])
 	return 1;
 }
 
-flags:crack(CMD_ALIVE)
+flags:crack(CMD_ALIVE | CMD_LOGGED)
 CMD:crack(playerid, params[])
 {
     new type;

@@ -1,3 +1,8 @@
+#if defined _INC_chat_core
+	#endinput
+#endif
+#define _INC_chat_core
+
 /**
     SA-MP Roleplay style chat module for SA-MP 0.3
     (c) 2012 SA-MP Team

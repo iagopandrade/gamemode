@@ -187,6 +187,13 @@ CMD:telar(playerid, params[])
 	return 1;
 }
 alias:telar("tv")
+/* Debug */
+CMD:forcartela(playerid, params[])
+{
+	TogglePlayerSpectating(playerid, true);
+	return 1;
+}
+alias:forcartela("ft")
 
 flags:tvoff(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:tvoff(playerid, params[])
@@ -196,7 +203,7 @@ CMD:tvoff(playerid, params[])
 		return 1;
 	}
 
-	TogglePlayerSpectating(playerid, false);
+	SpawnPlayerFromCharacter(playerid);
 	return 1;
 }
 /*
