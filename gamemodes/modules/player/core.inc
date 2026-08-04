@@ -80,18 +80,26 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 
     LastCommand[playerid] = GetTickCount();
 
-    if (!(flags & s_PlayerData[playerid][E_PLAYER_PERMISSIONS])) {
-        printf("player %d doesn’t have access to command '%s'", playerid, cmd);
-        return 0;
+    if (PC_CommandExists(cmd)) {
+        if (!(flags & s_PlayerData[playerid][E_PLAYER_PERMISSIONS])) {
+            /* Debug */
+            printf("player %d doesn’t have access to command '%s'", playerid, cmd);
+            return 0;
+        }
     }
     return 1;
 }
 
 public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
 {
-	if (result == -1) {
-		GameTextForPlayer(playerid, "~r~Comando inexistente", 3000, 3);
-	}
+    if (result == -1) {
+        GameTextForPlayer(
+            playerid,
+            "~r~ERRO~n~~w~Esse comando nao existe!",
+            5000, 16
+        );
+        return 0;
+    }
     return 1;
 }
 
