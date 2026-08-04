@@ -102,20 +102,3 @@ public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
     }
     return 1;
 }
-
-flags:money(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
-CMD:money(playerid, params[])
-{
-	GivePlayerMoney(playerid, 10000);
-	new Float:x, Float:y, Float:z;
-	GetPlayerPos(playerid, x, y, z);
-	PlayerPlaySound(playerid, 5405, x, y, z);
-	return 1;
-}
-
-flags:cmdsecreto(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
-CMD:cmdsecreto(playerid, params[])
-{
-    s_PlayerData[playerid][E_PLAYER_PERMISSIONS] = CMD_ADMIN | CMD_MODER | CMD_JR_MODER;
-	return 1;
-}

@@ -5,3 +5,4 @@
 
 #include "modules/character/core.inc"
 #include "modules/character/repository.inc"
+#include "modules/character/commands.inc"
