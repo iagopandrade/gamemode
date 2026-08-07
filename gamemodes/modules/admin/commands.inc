@@ -203,7 +203,7 @@ CMD:tvoff(playerid, params[])
 		return 1;
 	}
 
-	SpawnPlayerFromCharacter(playerid);
+	SpawnPlayer(playerid);
 	return 1;
 }
 /*

@@ -40,5 +40,3 @@ main()
 {
     print("Gamemode loaded successfully.");
 }
-
-// test
