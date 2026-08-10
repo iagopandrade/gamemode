@@ -10,6 +10,7 @@
 #endif
 #define _INC_house_commands
 
+flags:criarcasa(CMD_LOGGED | CMD_ADMIN)
 CMD:criarcasa(playerid, params[])
 {
     new houseid;
@@ -23,6 +24,7 @@ CMD:criarcasa(playerid, params[])
     return 1;
 }
 
+flags:ircasa(CMD_LOGGED | CMD_ADMIN)
 CMD:ircasa(playerid, params[])
 {
     if (sscanf(params, "i", params[0])) {
@@ -33,6 +35,7 @@ CMD:ircasa(playerid, params[])
     return 1;
 }
 
+flags:editarcasa(CMD_LOGGED | CMD_ADMIN)
 CMD:editarcasa(playerid, params[])
 {
     if (sscanf(params, "iii", params[0], params[1], params[2])) {
@@ -43,6 +46,7 @@ CMD:editarcasa(playerid, params[])
     return 1;
 }
 
+flags:deletarcasa(CMD_LOGGED | CMD_ADMIN)
 CMD:deletarcasa(playerid, params[])
 {
     if (sscanf(params, "i", params[0])) {
@@ -53,6 +57,7 @@ CMD:deletarcasa(playerid, params[])
     return 1;
 }
 
+flags:comprarcasa(CMD_LOGGED)
 CMD:comprarcasa(playerid)
 {
     for (new i = 0; i < MAX_HOUSES; i++)
@@ -85,6 +90,7 @@ CMD:comprarcasa(playerid)
     return 1;
 }
 
+flags:vendercasa(CMD_LOGGED)
 CMD:vendercasa(playerid)
 {
     for(new i = 0; i < MAX_HOUSES; i++)
@@ -121,6 +127,7 @@ CMD:vendercasa(playerid)
     return 1;
 }
 
+flags:trancar(CMD_LOGGED)
 CMD:trancar(playerid)
 {
     for (new i = 0; i < MAX_HOUSES; i++)
@@ -159,6 +166,7 @@ CMD:trancar(playerid)
     return 1;
 }
 
+flags:ajudacasa(CMD_LOGGED)
 CMD:ajudacasa(playerid)
 {
     Dialog_Show(playerid, "Comandos Casas",
@@ -171,17 +179,4 @@ CMD:ajudacasa(playerid)
     );
     return 1;
 }
-
-CMD:acasa(playerid)
-{
-    new String_COMANDOS[220];
-    format(String_COMANDOS, sizeof String_COMANDOS, "");
-    
-    strcat(String_COMANDOS, "{009900}ADMIN C-CASAS\n\n"); 
-    strcat(String_COMANDOS, "{CECECE}/criarcasa {FFFFFF}- Criar uma casa.\n");
-    strcat(String_COMANDOS, "{CECECE}/editarcasa {FFFFFF}- Editar uma casa.\n");
-    strcat(String_COMANDOS, "{CECECE}/deletarcasa {FFFFFF}- Deletar casa.\n");
-    strcat(String_COMANDOS, "{CECECE}/ircasa {FFFFFF}- Ir a uma casa.\n");
-    ShowPlayerDialog(playerid, 9545, DIALOG_STYLE_MSGBOX, "Comandos Admin C-Casas", String_COMANDOS, "Ok", "");
-    return 1;
-}
+alias:ajudacasa("acasa")
