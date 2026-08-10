@@ -22,11 +22,20 @@
 #include "modules/time/time.inc"
 #include "modules/admin/admin.inc"
 #include "modules/house/house.inc"
-#include "modules/company/company.inc"
+#include "modules/company/company_core.inc"
+#include "modules/company/company_dialogs.inc"
 
 public OnGameModeInit()
 {
     print("Gamemode initialized successfully.");
+
+    if (!ConnectToDatabase()) {
+        print("[Gamemode] Falha ao inicializar o banco de dados.");
+        return 0;
+    }
+
+    InitializeCompanySystem();
+    LoadCompanies();
     return 1;
 }
 

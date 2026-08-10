@@ -11,7 +11,7 @@ stock static ConnectedPlayerMessage(playerid, targetid)
 	return 0;
 }
 
-flags:chatadmin(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
+flags:chatadmin(CMD_LOGGED | CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:chatadmin(playerid, params[])
 {
 	if (isnull(params)) {
@@ -27,7 +27,7 @@ CMD:chatadmin(playerid, params[])
 }
 alias:chatadmin("ca")
 
-flags:servico(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
+flags:servico(CMD_LOGGED | CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:servico(playerid, params[])
 {
 	static permission[1];
@@ -40,7 +40,7 @@ CMD:servico(playerid, params[])
 	return 1;
 }
 
-flags:ir(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
+flags:ir(CMD_LOGGED | CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:ir(playerid, params[])
 {
 	new targetid;
@@ -70,7 +70,7 @@ CMD:ir(playerid, params[])
 	return 1;
 }
 
-flags:trazer(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
+flags:trazer(CMD_LOGGED | CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:trazer(playerid, params[])
 {
 	new targetid;
@@ -135,7 +135,7 @@ CMD:descongelar(playerid, params[])
 	return 1;
 }
 
-flags:telar(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
+flags:telar(CMD_LOGGED | CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:telar(playerid, params[])
 {
 	static Float:x;
@@ -195,7 +195,7 @@ CMD:forcartela(playerid, params[])
 }
 alias:forcartela("ft")
 
-flags:tvoff(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
+flags:tvoff(CMD_LOGGED | CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:tvoff(playerid, params[])
 {
 	if (GetPlayerSpectateType(playerid) == 0) {
@@ -491,7 +491,7 @@ CMD:criarveh(playerid, params[])
 }
 alias:criarveh("cv")
 
-flags:ajudaadmin(CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
+flags:ajudaadmin(CMD_LOGGED | CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:ajudaadmin(playerid, params[])
 {
 	Dialog_Show(playerid, "Comandos Administrativos", 

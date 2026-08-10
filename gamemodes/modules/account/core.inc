@@ -293,4 +293,6 @@ hook OnPlayerDisconnect(playerid, reason)
         SaveAccount(playerid);
         SaveCharacter(playerid);
     }
+
+    SetPlayerLogged(playerid, false);
 }

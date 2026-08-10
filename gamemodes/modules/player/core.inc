@@ -9,7 +9,7 @@ enum (<<= 1)
     CMD_MODER,     /*  0b00000000000000000000000000000010 */
     CMD_JR_MODER,  /*  0b00000000000000000000000000000100 */
     CMD_ALIVE,     /*  0b00000000000000000000000000001000 */
-    CMD_LOGGED    /*  0b00000000000000000000000000001000 */
+    CMD_LOGGED     /*  0b00000000000000000000000000001000 */
 };
 
 static enum e_PLAYER_DATA
@@ -38,6 +38,7 @@ stock SetPlayerLogged(playerid, bool:status = false)
     AddPermission(playerid, CMD_JR_MODER);
     AddPermission(playerid, CMD_ALIVE);
     AddPermission(playerid, CMD_LOGGED);
+    printf("[DEBUG]: Player[%d] Logged Status %d", playerid, status);
     return 1;
 }
 

@@ -3,8 +3,6 @@
 #endif
 #define _INC_database
 
-#include <pp-hooks>
-
 #define MYSQL_HOST              "127.0.0.1"
 #define MYSQL_USER              "root"
 #define MYSQL_PASS              ""
@@ -44,9 +42,4 @@ stock DisconnectFromDatabase()
 {
     mysql_close(s_DatabaseHandle);
     return 1;
-}
-
-hook OnGameModeInit()
-{
-    ConnectToDatabase();
 }
