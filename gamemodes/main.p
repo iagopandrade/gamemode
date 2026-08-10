@@ -22,8 +22,7 @@
 #include "modules/time/time.inc"
 #include "modules/admin/admin.inc"
 #include "modules/house/house.inc"
-#include "modules/company/company_core.inc"
-#include "modules/company/company_dialogs.inc"
+#include "modules/company/company.inc"
 
 public OnGameModeInit()
 {
