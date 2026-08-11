@@ -21,8 +21,8 @@ CMD:me(playerid, params[])
 		return 1;
 	}
 
-	new name[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, name, sizeof(name));
+	new name[MAX_PLAYER_NAME + 1];
+	GetCharacterName(playerid, name, sizeof(name));
 
 	new string[128];
 	format(string, sizeof(string), "* %s %s", name, params);
@@ -39,8 +39,9 @@ CMD:do(playerid, params[])
 		return 1;
 	}
 
-	new string[128], name[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, name, sizeof(name));
+	new string[128];
+	new name[MAX_PLAYER_NAME + 1];
+	GetCharacterName(playerid, name, sizeof(name));
 
 	format(string, sizeof(string), "* %s (( %s ))", params, name);
 	SendClientMessageToAll(0xC2A2DAFF, string);
@@ -55,8 +56,9 @@ CMD:b(playerid, params[])
 		return 1;
 	}
 
-	new string[128], name[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, name, sizeof(name));
+	new string[128];
+	new name[MAX_PLAYER_NAME + 1];
+	GetCharacterName(playerid, name, sizeof(name));
 
 	format(string, sizeof(string), "((%s: %s))", name, params);
 	SendClientMessageToAll(0xAAAAAAFF, string);
@@ -82,13 +84,13 @@ CMD:pm(playerid, params[])
 		return 1;
 	}
 
-	new nomeQuemFala[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, nomeQuemFala, sizeof(nomeQuemFala));
+	new nomeQuemFala[MAX_PLAYER_NAME + 1];
+	GetCharacterName(playerid, nomeQuemFala, sizeof(nomeQuemFala));
 
 	SendClientMessage(id, 0xFFFF00FF, "[PM de %s]: %s", nomeQuemFala, mensagem);
 
-	new nomeQuemRecebe[MAX_PLAYER_NAME];
-	GetPlayerName(id, nomeQuemRecebe, sizeof(nomeQuemRecebe));
+	new nomeQuemRecebe[MAX_PLAYER_NAME + 1];
+	GetCharacterName(id, nomeQuemRecebe, sizeof(nomeQuemRecebe));
 
 	SendClientMessage(playerid, 0xFFFF00FF, "[PM para %s]: %s", nomeQuemRecebe, mensagem);
 	return 1;
@@ -136,9 +138,11 @@ CMD:sussurrar(playerid, params[])
 		return 1;
 	}
 
-	new string[144], nomeQuemFala[MAX_PLAYER_NAME], nomeQuemRecebe[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, nomeQuemFala, sizeof(nomeQuemFala));
-	GetPlayerName(id, nomeQuemRecebe, sizeof(nomeQuemRecebe));
+	new string[144];
+	new nomeQuemFala[MAX_PLAYER_NAME + 1];
+	new nomeQuemRecebe[MAX_PLAYER_NAME + 1];
+	GetCharacterName(playerid, nomeQuemFala, sizeof(nomeQuemFala));
+	GetCharacterName(id, nomeQuemRecebe, sizeof(nomeQuemRecebe));
 
 	format(string, sizeof(string), "%s sussurra para voce: %s", nomeQuemFala, mensagem);
 	SendClientMessage(id, 0xFFFF00FF, string);

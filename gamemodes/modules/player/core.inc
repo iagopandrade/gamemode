@@ -42,6 +42,18 @@ stock SetPlayerLogged(playerid, bool:status = false)
     return 1;
 }
 
+stock GetCharacterName(playerid, name[], len = sizeof(name))
+{
+    GetPlayerName(playerid, name, len);
+
+    for (new i = 0; name[i] != '\0'; i++) {
+        if (name[i] == '_') {
+            name[i] = ' ';
+        }
+    }
+    return 1;
+}
+
 stock HasPlayerLogged(playerid)
 {   
     if (!IsPlayerConnected(playerid)) {

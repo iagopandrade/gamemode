@@ -41,14 +41,14 @@ public OnPlayerText(playerid, text[])
 
 static TalkMessage(Float:dist, playerid, const prefix[], message[])
 {
-    new PlayerName[MAX_PLAYER_NAME+1];
 	new Msg[256+1];
 	new MsgWithName[256+1];
 	
-	if (!strlen(message)) return;
+	if (!strlen(message)) { 
+		return;
+	}
 
-	if (IsPlayerConnected(playerid))
-	{
+	if (IsPlayerConnected(playerid)) {
 		new Float:fPlayerX, Float:fPlayerY, Float:fPlayerZ;
 		new Float:fPlayerToPlayerDist;
 		new Float:fNormDistance;
@@ -74,7 +74,10 @@ static TalkMessage(Float:dist, playerid, const prefix[], message[])
             SYNC_ALL
         );
 
-		GetPlayerName(playerid, PlayerName, sizeof(PlayerName));
+		new PlayerName[MAX_PLAYER_NAME+1];
+
+		GetCharacterName(playerid, PlayerName, sizeof(PlayerName));
+
 		if (strlen(prefix)) {
 			format(Msg, sizeof(Msg), "%s %s", prefix, message);
 		} else {
