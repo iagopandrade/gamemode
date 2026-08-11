@@ -33,6 +33,17 @@ static stock ResetCompanyCreation(playerid)
     return 1;
 }
 
+static enum {
+    ENUMATOR_NAME = 0,
+    ENUMATOR_OPEN,
+    ENUMATOR_CLOSE,
+    ENUMATOR_ENTRANCE,
+    ENUMATOR_EXIT,
+    ENUMATOR_MAPICON,
+    ENUMATOR_LOCKED,
+    ENUMATOR_DELETE
+}
+
 flags:criarempresa(CMD_LOGGED | CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:criarempresa(playerid, params[])
 {
@@ -47,7 +58,8 @@ CMD:criarempresa(playerid, params[])
     Dialog_Show(playerid, CompanyCreateName, DIALOG_STYLE_INPUT,
         "Criar empresa - Nome",
         "Digite o nome da nova empresa:",
-        "Proximo", "Cancelar");
+        "Próximo", "Cancelar"
+    );
     return 1;
 }
 
@@ -55,7 +67,7 @@ Dialog:CompanyCreateName(playerid, response, listitem, inputtext[])
 {
     if (!response) {
         ResetCompanyCreation(playerid);
-        SendClientMessage(playerid, -1, "Criacao de empresa cancelada.");
+        SendClientMessage(playerid, -1, "Criação de empresa cancelada.");
         return 1;
     }
 
@@ -64,11 +76,11 @@ Dialog:CompanyCreateName(playerid, response, listitem, inputtext[])
     }
 
     if (isnull(inputtext) || strlen(inputtext) >= 32) {
-        SendClientMessage(playerid, -1, "Nome invalido. Digite um nome de ate 31 caracteres.");
+        SendClientMessage(playerid, -1, "Nome invalido. Digite um nome de até 31 caracteres.");
         Dialog_Show(playerid, CompanyCreateName, DIALOG_STYLE_INPUT,
             "Criar empresa - Nome",
             "Digite o nome da nova empresa:",
-            "Proximo", "Cancelar"
+            "Próximo", "Cancelar"
         );
         return 1;
     }
@@ -78,8 +90,8 @@ Dialog:CompanyCreateName(playerid, response, listitem, inputtext[])
 
     Dialog_Show(playerid, CompanyCreateOpen, DIALOG_STYLE_INPUT,
         "Criar empresa - Abertura",
-        "Digite o horario de abertura (0 a 23):",
-        "Proximo", "Cancelar"
+        "Digite o horário de abertura (0 a 23):",
+        "Próximo", "Cancelar"
     );
     return 1;
 }
@@ -88,7 +100,7 @@ Dialog:CompanyCreateOpen(playerid, response, listitem, inputtext[])
 {
     if (!response) {
         ResetCompanyCreation(playerid);
-        SendClientMessage(playerid, -1, "Criacao de empresa cancelada.");
+        SendClientMessage(playerid, -1, "Criação de empresa cancelada.");
         return 1;
     }
 
@@ -99,11 +111,12 @@ Dialog:CompanyCreateOpen(playerid, response, listitem, inputtext[])
     new open;
 
     if (isnull(inputtext) || sscanf(inputtext, "i", open) || !(0 <= open <= 23)) {
-        SendClientMessage(playerid, -1, "Horario invalido. Digite um numero de 0 a 23.");
+        SendClientMessage(playerid, -1, "Horário inválido. Digite um número de 0 a 23.");
         Dialog_Show(playerid, CompanyCreateOpen, DIALOG_STYLE_INPUT,
             "Criar empresa - Abertura",
-            "Digite o horario de abertura (0 a 23):",
-            "Proximo", "Cancelar");
+            "Digite o horário de abertura (0 a 23):",
+            "Próximo", "Cancelar"
+        );
         return 1;
     }
 
@@ -111,8 +124,9 @@ Dialog:CompanyCreateOpen(playerid, response, listitem, inputtext[])
 
     Dialog_Show(playerid, CompanyCreateClose, DIALOG_STYLE_INPUT,
         "Criar empresa - Fechamento",
-        "Digite o horario de fechamento (0 a 23):",
-        "Proximo", "Cancelar");
+        "Digite o horário de fechamento (0 a 23):",
+        "Próximo", "Cancelar"
+    );
     return 1;
 }
 
@@ -120,7 +134,7 @@ Dialog:CompanyCreateClose(playerid, response, listitem, inputtext[])
 {
     if (!response) {
         ResetCompanyCreation(playerid);
-        SendClientMessage(playerid, -1, "Criacao de empresa cancelada.");
+        SendClientMessage(playerid, -1, "Criação de empresa cancelada.");
         return 1;
     }
 
@@ -131,11 +145,11 @@ Dialog:CompanyCreateClose(playerid, response, listitem, inputtext[])
     new close;
 
     if (isnull(inputtext) || sscanf(inputtext, "i", close) || !(0 <= close <= 23)) {
-        SendClientMessage(playerid, -1, "Horario invalido. Digite um numero de 0 a 23.");
+        SendClientMessage(playerid, -1, "Horário invalido. Digite um número de 0 a 23.");
         Dialog_Show(playerid, CompanyCreateClose, DIALOG_STYLE_INPUT,
             "Criar empresa - Fechamento",
-            "Digite o horario de fechamento (0 a 23):",
-            "Proximo", "Cancelar"
+            "Digite o horário de fechamento (0 a 23):",
+            "Próximo", "Cancelar"
         );
         return 1;
     }
@@ -144,8 +158,8 @@ Dialog:CompanyCreateClose(playerid, response, listitem, inputtext[])
 
     Dialog_Show(playerid, CompanyCreateEnter, DIALOG_STYLE_MSGBOX,
         "Criar empresa - Entrada",
-        "Va ate o local desejado para a ENTRADA da empresa e confirme.\n\
-        Sua posicao e interior atuais serao utilizados.",
+        "Vá até o local desejado para a ENTRADA da empresa e confirme.\n\
+        Sua posição e interior atuais serão utilizados.",
         "Confirmar", "Cancelar"
     );
     return 1;
@@ -155,7 +169,7 @@ Dialog:CompanyCreateEnter(playerid, response, listitem, inputtext[])
 {
     if (!response) {
         ResetCompanyCreation(playerid);
-        SendClientMessage(playerid, -1, "Criacao de empresa cancelada.");
+        SendClientMessage(playerid, -1, "Criação de empresa cancelada.");
         return 1;
     }
 
@@ -174,9 +188,9 @@ Dialog:CompanyCreateEnter(playerid, response, listitem, inputtext[])
     s_CompanyCreation[playerid][E_COMPANY_ENTER_INTERIOR] = GetPlayerInterior(playerid);
 
     Dialog_Show(playerid, CompanyCreateExit, DIALOG_STYLE_MSGBOX,
-        "Criar empresa - Saida",
-        "Va ate o local desejado para a SAIDA da empresa e confirme.\n\
-        Sua posicao e interior atuais serao utilizados.",
+        "Criar empresa - Saída",
+        "Vá até o local desejado para a SAIDA da empresa e confirme.\n\
+        Sua posição e interior atuais serão utilizados.",
         "Confirmar", "Cancelar"
     );
     return 1;
@@ -186,7 +200,7 @@ Dialog:CompanyCreateExit(playerid, response, listitem, inputtext[])
 {
     if (!response) {
         ResetCompanyCreation(playerid);
-        SendClientMessage(playerid, -1, "Criacao de empresa cancelada.");
+        SendClientMessage(playerid, -1, "Criação de empresa cancelada.");
         return 1;
     }
 
@@ -209,7 +223,7 @@ Dialog:CompanyCreateExit(playerid, response, listitem, inputtext[])
         Fechamento: %02d:00\n\n\
         Entrada:\n\
         %.2f, %.2f, %.2f (Interior %d)\n\n\
-        Saida:\n\
+        Saída:\n\
         %.2f, %.2f, %.2f (Interior %d)\n\n\
         Deseja criar esta empresa?",
         s_CompanyCreation[playerid][E_COMPANY_NAME],
@@ -226,7 +240,7 @@ Dialog:CompanyCreateExit(playerid, response, listitem, inputtext[])
     );
 
     Dialog_Show(playerid, CompanyCreateConfirm, DIALOG_STYLE_MSGBOX,
-        "Criar empresa - Confirmacao",
+        "Criar empresa - Confirmação",
         summary,
         "Criar", "Cancelar"
     );
@@ -237,7 +251,7 @@ Dialog:CompanyCreateConfirm(playerid, response, listitem, inputtext[])
 {
     if (!response || !s_CompanyCreation[playerid][E_COMPANY_ACTIVE]) {
         ResetCompanyCreation(playerid);
-        SendClientMessage(playerid, -1, "Criacao de empresa cancelada.");
+        SendClientMessage(playerid, -1, "Criação de empresa cancelada.");
         return 1;
     }
 
@@ -323,7 +337,7 @@ Dialog:CompanyEditList(playerid, response, listitem, inputtext[])
     }
 
     if (!IsValidCompany(companyid)) {
-        SendClientMessage(playerid, -1, "Empresa invalida.");
+        SendClientMessage(playerid, -1, "Empresa inválida.");
         return 1;
     }
 
@@ -338,13 +352,16 @@ Dialog:CompanyEditList(playerid, response, listitem, inputtext[])
     new menu[256];
     format(menu, sizeof(menu),
         "Nome (%s)\n\
-        Horario de abertura (%02d:00)\n\
-        Horario de fechamento (%02d:00)\n\
+        Horário de abertura (%02d:00)\n\
+        Horário de fechamento (%02d:00)\n\
         Redefinir entrada\n\
-        Redefinir saida\n\
+        Redefinir saída\n\
+        Ícone\n\
         %s\n\
         Excluir empresa",
-        name, open, close,
+        name,
+        open,
+        close,
         IsCompanyLocked(companyid) ? "Destrancar empresa" : "Trancar empresa"
     );
 
@@ -370,44 +387,60 @@ Dialog:CompanyEditMenu(playerid, response, listitem, inputtext[])
     }
 
     switch (listitem) {
-        case 0: {
+        case ENUMATOR_NAME: {
             Dialog_Show(playerid, CompanyEditName, DIALOG_STYLE_INPUT,
                 "Editar empresa - Nome",
                 "Digite o novo nome da empresa:",
-                "Salvar", "Cancelar");
-        } case 1: {
+                "Salvar", "Cancelar"
+            );
+        } case ENUMATOR_OPEN: {
             Dialog_Show(playerid, CompanyEditOpen, DIALOG_STYLE_INPUT,
                 "Editar empresa - Abertura",
-                "Digite o novo horario de abertura (0 a 23):",
-                "Salvar", "Cancelar");
-        } case 2: {
+                "Digite o novo horário de abertura (0 a 23):",
+                "Salvar", "Cancelar"
+            );
+        } case ENUMATOR_CLOSE: {
             Dialog_Show(playerid, CompanyEditClose, DIALOG_STYLE_INPUT,
                 "Editar empresa - Fechamento",
-                "Digite o novo horario de fechamento (0 a 23):",
-                "Salvar", "Cancelar");
-        } case 3: {
+                "Digite o novo horário de fechamento (0 a 23):",
+                "Salvar", "Cancelar"
+            );
+        } case ENUMATOR_ENTRANCE: {
             Dialog_Show(playerid, CompanyEditEnter, DIALOG_STYLE_MSGBOX,
                 "Editar empresa - Entrada",
-                "Va ate o novo local de ENTRADA e confirme.\n\
-                Sua posicao e interior atuais serao utilizados.",
-                "Confirmar", "Cancelar");
-        } case 4: {
+                "Vá até o novo local de ENTRADA e confirme.\n\
+                Sua posição e interior atuais serão utilizados.",
+                "Confirmar", "Cancelar"
+            );
+        } case ENUMATOR_EXIT: {
             Dialog_Show(playerid, CompanyEditExit, DIALOG_STYLE_MSGBOX,
-                "Editar empresa - Saida",
-                "Va ate o novo local de SAIDA e confirme.\n\
-                Sua posicao e interior atuais serao utilizados.",
-                "Confirmar", "Cancelar");
-        } case 5: {
+                "Editar empresa - Saída",
+                "Vá até o novo local de SAIDA e confirme.\n\
+                Sua posição e interior atuais serão utilizados.",
+                "Confirmar", "Cancelar"
+            );
+        } case ENUMATOR_MAPICON: {
+            Dialog_Show(playerid, CompanyEditIcon, DIALOG_STYLE_LIST,
+                "Editar empresa - Icone",
+                "Ativar/desativar\n\
+                Alterar icone\n\
+                Alterar cor",
+                "Selecionar",
+                "Voltar"
+            );
+        } case ENUMATOR_LOCKED: {
             SetCompanyLocked(companyid, !IsCompanyLocked(companyid));
 
             SendClientMessage(playerid, -1, IsCompanyLocked(companyid)
                 ? "Empresa trancada."
-                : "Empresa destrancada.");
-        } case 6: {
+                : "Empresa destrancada."
+            );
+        } case ENUMATOR_DELETE: {
             Dialog_Show(playerid, CompanyEditDelete, DIALOG_STYLE_MSGBOX,
                 "Editar empresa - Excluir",
                 "Tem certeza que deseja excluir esta empresa?\nEsta acao nao pode ser desfeita.",
-                "Excluir", "Cancelar");
+                "Excluir", "Cancelar"
+            );
         }
     }
     return 1;
@@ -450,13 +483,13 @@ Dialog:CompanyEditOpen(playerid, response, listitem, inputtext[])
     new open, close, newOpen;
 
     if (isnull(inputtext) || sscanf(inputtext, "i", newOpen) || !(0 <= newOpen <= 23)) {
-        SendClientMessage(playerid, -1, "Horario invalido.");
+        SendClientMessage(playerid, -1, "Horário invalido.");
         return 1;
     }
 
     GetCompanyBusinessHour(companyid, open, close);
     SetCompanyBusinessHour(companyid, newOpen, close);
-    SendClientMessage(playerid, -1, "Horario de abertura atualizado.");
+    SendClientMessage(playerid, -1, "Horário de abertura atualizado.");
     return 1;
 }
 
@@ -475,15 +508,37 @@ Dialog:CompanyEditClose(playerid, response, listitem, inputtext[])
     new open, close, newClose;
 
     if (isnull(inputtext) || sscanf(inputtext, "i", newClose) || !(0 <= newClose <= 23)) {
-        SendClientMessage(playerid, -1, "Horario invalido.");
+        SendClientMessage(playerid, -1, "Horário invalido.");
         return 1;
     }
 
     GetCompanyBusinessHour(companyid, open, close);
     SetCompanyBusinessHour(companyid, open, newClose);
-    SendClientMessage(playerid, -1, "Horario de fechamento atualizado.");
+    SendClientMessage(playerid, -1, "Horário de fechamento atualizado.");
     return 1;
 }
+
+Dialog:CompanyEditIcon(playerid, response, listitem, inputtext[])
+{
+    if (!response) {
+        return 1;
+    }
+
+    new companyid = s_EditingCompany[playerid];
+
+    if (!IsValidCompany(companyid)) {
+        return 1;
+    }
+
+    return 1;
+}
+
+// Dialog_Show(playerid, CompanyEditIcon, DIALOG_STYLE_LIST,
+//                 "Editar empresa - Icone",
+//                 "Ativar/desativar\n\
+//                 Alterar icone\n\
+//                 Alterar cor",
+//                 "Selecionar","Voltar");
 
 Dialog:CompanyEditEnter(playerid, response, listitem, inputtext[])
 {
@@ -521,7 +576,7 @@ Dialog:CompanyEditExit(playerid, response, listitem, inputtext[])
     GetPlayerPos(playerid, x, y, z);
 
     SetCompanyExitPos(companyid, x, y, z, GetPlayerInterior(playerid));
-    SendClientMessage(playerid, -1, "Saida da empresa atualizada.");
+    SendClientMessage(playerid, -1, "Saída da empresa atualizada.");
     return 1;
 }
 
@@ -538,6 +593,6 @@ Dialog:CompanyEditDelete(playerid, response, listitem, inputtext[])
     }
 
     DeleteCompany(companyid);
-    SendClientMessage(playerid, -1, "Empresa excluida.");
+    SendClientMessage(playerid, -1, "Empresa excluída.");
     return 1;
 }
