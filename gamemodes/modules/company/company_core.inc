@@ -668,7 +668,7 @@ public OnCompanyDeleteQuery(companyid, sqlId)
     return 1;
 }
 
-hook OnPlayerPickUpDynamicPickup(playerid, STREAMER_TAG_PICKUP:pickupid)
+public OnPlayerPickUpDynamicPickup(playerid, STREAMER_TAG_PICKUP:pickupid)
 {
     if (_:pickupid >= MAX_DYNAMIC_PICKUPS) {
         return 1;

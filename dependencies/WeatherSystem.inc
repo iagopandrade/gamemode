@@ -22,7 +22,6 @@
 #endif
 #define _weathersystem_included
 #include <streamer>
-#include <pp-hooks>
 #include <foreach>
 
         // Definições
@@ -99,19 +98,6 @@ static const g_CityNames[][16] = {
     "Las Venturas" 
 };
 
-
-hook OnGameModeInit() {
-
-    g_AreaWeather[E_CITY_LS] = CreateDynamicRectangle(-790.0, -3000.0, 3000.0, 548.0);
-    g_AreaWeather[E_CITY_SF] = CreateDynamicRectangle(-3000.0, -3000.0, -784.0, 3000.0);
-    g_AreaWeather[E_CITY_LV] = CreateDynamicRectangle(-790.0, 548.0, 3000.0, 3000.0);
-}
-
-hook OnPlayerSpawn(playerid) {
-
-    UpdatePlayerWeather(playerid);
-    g_LastPlayerCity[playerid] = GetPlayerCity(playerid);
-}
 /*
 
                     ooooooooo.   ooooo     ooo oooooooooo.  ooooo        ooooo   .oooooo.   
@@ -123,6 +109,55 @@ hook OnPlayerSpawn(playerid) {
                     o888o           `YbodP'    o888bood8P'  o888ooooood8 o888o  `Y8bood8P'  
 
 */
+
+public OnGameModeInit() 
+{
+    g_AreaWeather[E_CITY_LS] = CreateDynamicRectangle(-790.0, -3000.0, 3000.0, 548.0);
+    g_AreaWeather[E_CITY_SF] = CreateDynamicRectangle(-3000.0, -3000.0, -784.0, 3000.0);
+    g_AreaWeather[E_CITY_LV] = CreateDynamicRectangle(-790.0, 548.0, 3000.0, 3000.0);
+    
+    #if defined WeatherSystem_OnGameModeInit
+        return WeatherSystem_OnGameModeInit();
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
+#else
+    #define _ALS_OnGameModeInit
+#endif
+
+#define OnGameModeInit WeatherSystem_OnGameModeInit
+
+#if defined WeatherSystem_OnGameModeInit
+    forward WeatherSystem_OnGameModeInit();
+#endif
+
+public OnPlayerSpawn(playerid) 
+{
+    UpdatePlayerWeather(playerid);
+    g_LastPlayerCity[playerid] = GetPlayerCity(playerid);
+
+    #if defined WeatherSystem_OnPlayerSpawn
+        return WeatherSystem_OnPlayerSpawn(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerSpawn
+    #undef OnPlayerSpawn
+#else
+    #define _ALS_OnPlayerSpawn
+#endif
+
+#define OnPlayerSpawn WeatherSystem_OnPlayerSpawn
+
+#if defined WeatherSystem_OnPlayerSpawn
+    forward WeatherSystem_OnPlayerSpawn(playerid);
+#endif
 
 // Callback para quando o jogador entra em uma área dinâmica
 public OnPlayerEnterDynamicArea(playerid, STREAMER_TAG_AREA:areaid) {
@@ -142,7 +177,25 @@ public OnPlayerEnterDynamicArea(playerid, STREAMER_TAG_AREA:areaid) {
             SetPlayerWeather(playerid, g_CityWeather[weather_city]);
         }
     }
+
+    #if defined WeatherSystem_OnPlayerEnterDynamicArea
+        return WeatherSystem_OnPlayerEnterDynamicArea(playerid, areaid);
+    #else
+        return 1;
+    #endif
 }
+
+#if defined _ALS_OnPlayerEnterDynamicArea
+    #undef OnPlayerEnterDynamicArea
+#else
+    #define _ALS_OnPlayerEnterDynamicArea
+#endif
+
+#define OnPlayerEnterDynamicArea WeatherSystem_OnPlayerEnterDynamicArea
+
+#if defined WeatherSystem_OnPlayerEnterDynamicArea
+    forward WeatherSystem_OnPlayerEnterDynamicArea(playerid, STREAMER_TAG_AREA:areaid);
+#endif
 
 /*
 

@@ -3,8 +3,6 @@
 #endif
 #define _INC_time_core
 
-#include <pp-hooks>
-
 #define TIMER_INTERVAL      1000
 #define MINUTES_PER_TICK    1
 
@@ -13,7 +11,7 @@ static s_WorldMinute = 0;
  
 static Text:txtTimeDisp = Text:INVALID_TEXT_DRAW;
 
-hook OnGameModeInit()
+public OnGameModeInit()
 {
     SetCityWeather(E_CITY_LS, E_WEATHER_EXTRASUNNY_SMOG);
     SetCityWeather(E_CITY_LV, E_WEATHER_EXTRASUNNY_MILD);   // Las Venturas com clima extra ensolarado ameno
@@ -32,25 +30,78 @@ hook OnGameModeInit()
     SetTimer("UpdateWorldTime", TIMER_INTERVAL, true);
     
     UpdateWorldTime();
+
+    #if defined TimeCore_OnGameModeInit
+        return TimeCore_OnGameModeInit();
+    #else
+        return 1;
+    #endif
 }
 
-hook OnPlayerConnect(playerid)
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
+#else
+    #define _ALS_OnGameModeInit
+#endif
+
+#define OnGameModeInit TimeCore_OnGameModeInit
+
+#if defined TimeCore_OnGameModeInit
+    forward TimeCore_OnGameModeInit();
+#endif
+
+public OnPlayerConnect(playerid)
 {
     SetPlayerTime(playerid, s_WorldHour, s_WorldMinute);
 
     if (txtTimeDisp != Text:INVALID_TEXT_DRAW) {
         TextDrawShowForPlayer(playerid, txtTimeDisp);
     }
+
+    #if defined TimeCore_OnPlayerConnect
+        return TimeCore_OnPlayerConnect(playerid);
+    #else
+        return 1;
+    #endif
 }
 
-hook OnPlayerSpawn(playerid)
+#if defined _ALS_OnPlayerConnect
+    #undef OnPlayerConnect
+#else
+    #define _ALS_OnPlayerConnect
+#endif
+
+#define OnPlayerConnect TimeCore_OnPlayerConnect
+
+#if defined TimeCore_OnPlayerConnect
+    forward TimeCore_OnPlayerConnect(playerid);
+#endif
+
+public OnPlayerSpawn(playerid)
 {
     new cidade = GetPlayerCity(playerid);
     new Clima  = GetCityWeather(cidade);
     
     printf("Seu clima e %s sua cidade e %s", GetClimaName(Clima), GetCityName(cidade));
-    return 1;
+
+    #if defined TimeCore_OnPlayerSpawn
+        return TimeCore_OnPlayerSpawn(playerid);
+    #else
+        return 1;
+    #endif
 }
+
+#if defined _ALS_OnPlayerSpawn
+    #undef OnPlayerSpawn
+#else
+    #define _ALS_OnPlayerSpawn
+#endif
+
+#define OnPlayerSpawn TimeCore_OnPlayerSpawn
+
+#if defined TimeCore_OnPlayerSpawn
+    forward TimeCore_OnPlayerSpawn(playerid);
+#endif
 
 stock GetServerTime(&hour, &minute = 0)
 {

@@ -3,8 +3,6 @@
 #endif
 #define _INC_character_commands_cash_payment
 
-#include <pp-hooks>
-
 static PlayerText:s_PaymentTextDraw[MAX_PLAYERS][2];
 
 stock CreatePaymentTextDraw(playerid) 
@@ -170,12 +168,30 @@ CMD:pagar(playerid, params[])
     return 1;
 }
 
-hook OnPlayerConnect(playerid)
+public OnPlayerConnect(playerid)
 {
     CreatePaymentTextDraw(playerid);
+
+    #if defined CharacterCommandsCashPayment_OnPlayerConnect
+        return CharacterCommandsCashPayment_OnPlayerConnect(playerid);
+    #else
+        return 1;
+    #endif
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+#if defined _ALS_OnPlayerConnect
+    #undef OnPlayerConnect
+#else
+    #define _ALS_OnPlayerConnect
+#endif
+
+#define OnPlayerConnect CharacterCommandsCashPayment_OnPlayerConnect
+
+#if defined CharacterCommandsCashPayment_OnPlayerConnect
+    forward CharacterCommandsCashPayment_OnPlayerConnect(playerid);
+#endif
+
+public OnPlayerDisconnect(playerid, reason)
 {
     if (s_PaymentTDTimer[playerid]) {
         KillTimer(s_PaymentTDTimer[playerid]);
@@ -185,10 +201,27 @@ hook OnPlayerDisconnect(playerid, reason)
     s_PendingPayment[playerid][E_PAYMENT_ACTIVE] = false;
     s_PendingPayment[playerid][E_PAYMENT_FROM] = INVALID_PLAYER_ID;
     s_PendingPayment[playerid][E_PAYMENT_VALUE] = 0;
-    return 1;
+
+    #if defined CharacterCommandsCashPayment_OnPlayerDisconnect
+        return CharacterCommandsCashPayment_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
 }
 
-hook OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+
+#define OnPlayerDisconnect CharacterCommandsCashPayment_OnPlayerDisconnect
+
+#if defined CharacterCommandsCashPayment_OnPlayerDisconnect
+    forward CharacterCommandsCashPayment_OnPlayerDisconnect(playerid, reason);
+#endif
+
+public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 {
     if (playertextid == s_PaymentTextDraw[playerid][0]) {
         if (!s_PendingPayment[playerid][E_PAYMENT_ACTIVE]) {

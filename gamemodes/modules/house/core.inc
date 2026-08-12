@@ -10,8 +10,6 @@
 #endif
 #define _INC_house_core
 
-#include <pp-hooks>
-
 #define MAX_HOUSES (100)
 
 enum pInfo
@@ -72,7 +70,7 @@ new interiors[][inter] =
 
 new DB:Database;
 
-hook OnGameModeInit()
+public OnGameModeInit()
 {
     print("\n-------------------------------------");
     print("Sistema C-casas carregado com sucesso.");
@@ -81,9 +79,27 @@ hook OnGameModeInit()
     print("-------------------------------------\n");
     ConectarDB();
     CarregarCasas();
+
+    #if defined HouseCore_OnGameModeInit
+        return HouseCore_OnGameModeInit();
+    #else
+        return 1;
+    #endif
 }
 
-hook OnGameModeExit()
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
+#else
+    #define _ALS_OnGameModeInit
+#endif
+
+#define OnGameModeInit HouseCore_OnGameModeInit
+
+#if defined HouseCore_OnGameModeInit
+    forward HouseCore_OnGameModeInit();
+#endif
+
+public OnGameModeExit()
 {
     DB_Close(Database);
     for (new i = 0; i < MAX_HOUSES; ++i) {
@@ -91,22 +107,76 @@ hook OnGameModeExit()
         DestroyDynamicMapIcon(c[i][cIcone]);
         DestroyDynamic3DTextLabel(c[i][cText]);
     }
+    
+    #if defined HouseCore_OnGameModeExit
+        return HouseCore_OnGameModeExit();
+    #else
+        return 1;
+    #endif
 }
 
-hook OnPlayerConnect(playerid)
+#if defined _ALS_OnGameModeExit
+    #undef OnGameModeExit
+#else
+    #define _ALS_OnGameModeExit
+#endif
+
+#define OnGameModeExit HouseCore_OnGameModeExit
+
+#if defined HouseCore_OnGameModeExit
+    forward HouseCore_OnGameModeExit();
+#endif
+
+public OnPlayerConnect(playerid)
 {
     GetPlayerName(playerid, p[playerid][Nome], 24);
     CarregarDadosPlayer(playerid);
+
+    #if defined HouseCore_OnPlayerConnect
+        return HouseCore_OnPlayerConnect(playerid);
+    #else
+        return 1;
+    #endif
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+#if defined _ALS_OnPlayerConnect
+    #undef OnPlayerConnect
+#else
+    #define _ALS_OnPlayerConnect
+#endif
+
+#define OnPlayerConnect HouseCore_OnPlayerConnect
+
+#if defined HouseCore_OnPlayerConnect
+    forward HouseCore_OnPlayerConnect(playerid);
+#endif
+
+public OnPlayerDisconnect(playerid, reason)
 {
     if (p[playerid][TemCasa] > 0) {
         SalvarDadosPlayer(playerid);
     }
+
+    #if defined HouseCore_OnPlayerDisconnect
+        return HouseCore_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
 }
 
-hook OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys)
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+
+#define OnPlayerDisconnect HouseCore_OnPlayerDisconnect
+
+#if defined HouseCore_OnPlayerDisconnect
+    forward HouseCore_OnPlayerDisconnect(playerid, reason);
+#endif
+
+public OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys)
 {
     if (newkeys == KEY_SECONDARY_ATTACK) {
         for (new i = 0; i < MAX_HOUSES; i++) {
