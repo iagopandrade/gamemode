@@ -30,7 +30,7 @@ alias:chatadmin("ca")
 flags:servico(CMD_LOGGED | CMD_ADMIN | CMD_MODER | CMD_JR_MODER)
 CMD:servico(playerid, params[])
 {
-	static permission[1];
+	static permission[MAX_PLAYERS];
 	permission[playerid] = !permission[playerid];
 	SendClientMessage(
 		playerid, 
