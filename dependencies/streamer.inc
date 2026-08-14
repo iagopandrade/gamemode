@@ -204,6 +204,13 @@ native Streamer_GetCellDistance(&Float:distance);
 native Streamer_SetCellDistance(Float:distance);
 native Streamer_GetCellSize(&Float:size);
 native Streamer_SetCellSize(Float:size);
+// Two-tier grid (VS:RP fork). Items with stream distance between cellDistance and
+// coarseCellDistance are bucketed into larger coarse cells (default 1500×1500) instead
+// of globalCell. Distance = 0 disables the tier.
+native Streamer_GetCoarseCellSize(&Float:size);
+native Streamer_SetCoarseCellSize(Float:size);
+native Streamer_GetCoarseCellDistance(&Float:distance);
+native Streamer_SetCoarseCellDistance(Float:distance);
 native Streamer_ToggleItemStatic(type, STREAMER_ALL_TAGS:id, toggle);
 native Streamer_IsToggleItemStatic(type, STREAMER_ALL_TAGS:id);
 native Streamer_ToggleItemInvAreas(type, STREAMER_ALL_TAGS:id, toggle);
@@ -226,6 +233,24 @@ native Streamer_IsToggleItemUpdate(playerid, type);
 native Streamer_GetLastUpdateTime(&Float:time);
 native Streamer_Update(playerid, type = -1);
 native Streamer_UpdateEx(playerid, Float:x, Float:y, Float:z, worldid = -1, interiorid = -1, type = -1, compensatedtime = -1, freezeplayer = 1);
+
+// Telemetry (VS:RP fork) — per-phase, cumulative since last reset.
+// `type` is one of STREAMER_TYPE_OBJECT / STREAMER_TYPE_CP / STREAMER_TYPE_RACE_CP /
+// STREAMER_TYPE_MAP_ICON / STREAMER_TYPE_3D_TEXT_LABEL / STREAMER_TYPE_AREA.
+// (ACTOR and PICKUP streams aren't per-player; their numbers will be ~0.)
+native Streamer_GetPhaseTimeNs(type);    // cumulative ns, clamped to INT_MAX
+native Streamer_GetPhaseAvgUs(type);     // avg microseconds per player-tick in this phase
+native Streamer_GetPhaseTickCount();     // number of per-player ticks since reset
+native Streamer_ResetPhaseStats();       // zero all counters
+native Streamer_GetPhaseStreamInCount(type);   // count of client-create calls since reset
+native Streamer_GetPhaseStreamOutCount(type);  // count of client-destroy calls since reset
+
+// Anti-flicker hysteresis (VS:RP fork). When factor > 1.0, items already streamed stay
+// streamed until the player is `factor * streamDistance` away (boundary-snap avoided).
+// Default 1.0 (legacy behavior). Recommended 1.05..1.10. Applies to OBJECT, MAP_ICON,
+// 3D_TEXT_LABEL; ignored for other types.
+native Float:Streamer_GetHysteresisFactor(type);
+native Streamer_SetHysteresisFactor(type, Float:factor);
 
 // Natives (Data Manipulation)
 
@@ -331,9 +356,9 @@ native UpdateDynamic3DTextLabelText(STREAMER_TAG_3D_TEXT_LABEL:id, color, const 
 
 // Natives (Areas)
 
-native STREAMER_TAG_AREA:CreateDynamicCircle(Float:x, Float:y, Float:size, worldid = -1, interiorid = -1, playerid = -1, priority = 0);
-native STREAMER_TAG_AREA:CreateDynamicCylinder(Float:x, Float:y, Float:minz, Float:maxz, Float:size, worldid = -1, interiorid = -1, playerid = -1, priority = 0);
-native STREAMER_TAG_AREA:CreateDynamicSphere(Float:x, Float:y, Float:z, Float:size, worldid = -1, interiorid = -1, playerid = -1, priority = 0);
+native STREAMER_TAG_AREA:CreateDynamicCircle(Float:x, Float:y, Float:radius, worldid = -1, interiorid = -1, playerid = -1, priority = 0);
+native STREAMER_TAG_AREA:CreateDynamicCylinder(Float:x, Float:y, Float:minz, Float:maxz, Float:radius, worldid = -1, interiorid = -1, playerid = -1, priority = 0);
+native STREAMER_TAG_AREA:CreateDynamicSphere(Float:x, Float:y, Float:z, Float:radius, worldid = -1, interiorid = -1, playerid = -1, priority = 0);
 native STREAMER_TAG_AREA:CreateDynamicRectangle(Float:minx, Float:miny, Float:maxx, Float:maxy, worldid = -1, interiorid = -1, playerid = -1, priority = 0);
 native STREAMER_TAG_AREA:CreateDynamicCuboid(Float:minx, Float:miny, Float:minz, Float:maxx, Float:maxy, Float:maxz, worldid = -1, interiorid = -1, playerid = -1, priority = 0);
 native STREAMER_TAG_AREA:CreateDynamicCube(Float:minx, Float:miny, Float:minz, Float:maxx, Float:maxy, Float:maxz, worldid = -1, interiorid = -1, playerid = -1, priority = 0);
@@ -394,9 +419,9 @@ native STREAMER_TAG_RACE_CP:CreateDynamicRaceCPEx(type, Float:x, Float:y, Float:
 native STREAMER_TAG_MAP_ICON:CreateDynamicMapIconEx(Float:x, Float:y, Float:z, type, color, style = MAPICON_LOCAL, Float:streamdistance = STREAMER_MAP_ICON_SD, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, const STREAMER_TAG_AREA:areas[] = { STREAMER_TAG_AREA:-1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players, maxareas = sizeof areas);
 native STREAMER_TAG_3D_TEXT_LABEL:CreateDynamic3DTextLabelEx(const text[], color, Float:x, Float:y, Float:z, Float:drawdistance, attachedplayer = INVALID_PLAYER_ID, attachedvehicle = INVALID_VEHICLE_ID, testlos = 0, Float:streamdistance = STREAMER_3D_TEXT_LABEL_SD, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, const STREAMER_TAG_AREA:areas[] = { STREAMER_TAG_AREA:-1 }, priority = 0,
 	maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players, maxareas = sizeof areas);
-native STREAMER_TAG_AREA:CreateDynamicCircleEx(Float:x, Float:y, Float:size, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);
-native STREAMER_TAG_AREA:CreateDynamicCylinderEx(Float:x, Float:y, Float:minz, Float:maxz, Float:size, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);
-native STREAMER_TAG_AREA:CreateDynamicSphereEx(Float:x, Float:y, Float:z, Float:size, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);
+native STREAMER_TAG_AREA:CreateDynamicCircleEx(Float:x, Float:y, Float:radius, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);
+native STREAMER_TAG_AREA:CreateDynamicCylinderEx(Float:x, Float:y, Float:minz, Float:maxz, Float:radius, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);
+native STREAMER_TAG_AREA:CreateDynamicSphereEx(Float:x, Float:y, Float:z, Float:radius, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);
 native STREAMER_TAG_AREA:CreateDynamicRectangleEx(Float:minx, Float:miny, Float:maxx, Float:maxy, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);
 native STREAMER_TAG_AREA:CreateDynamicCuboidEx(Float:minx, Float:miny, Float:minz, Float:maxx, Float:maxy, Float:maxz, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);
 native STREAMER_TAG_AREA:CreateDynamicCubeEx(Float:minx, Float:miny, Float:minz, Float:maxx, Float:maxy, Float:maxz, const worlds[] = { -1 }, const interiors[] = { -1 }, const players[] = { -1 }, priority = 0, maxworlds = sizeof worlds, maxinteriors = sizeof interiors, maxplayers = sizeof players);
@@ -454,3 +479,17 @@ forward OnDynamicActorStreamOut(STREAMER_TAG_ACTOR:actorid, forplayerid);
 forward Streamer_OnItemStreamIn(type, STREAMER_ALL_TAGS:id, forplayerid);
 forward Streamer_OnItemStreamOut(type, STREAMER_ALL_TAGS:id, forplayerid);
 forward Streamer_OnPluginError(const error[]);
+
+// open.mp wrappers
+
+#if defined _INC_omp_npc
+	stock NPC_SetSurfingDynamicObject(npcid, STREAMER_TAG_OBJECT:objectid)
+	{
+		return NPC_SetSurfingPlayerObject(npcid, Streamer_GetItemInternalID(npcid, STREAMER_TYPE_OBJECT, objectid));
+	}
+
+	stock STREAMER_TAG_OBJECT:NPC_GetSurfingDynamicObject(npcid)
+	{
+		return Streamer_GetItemStreamerID(npcid, STREAMER_TYPE_OBJECT, NPC_GetSurfingPlayerObject(npcid));
+	}
+#endif

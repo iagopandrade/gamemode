@@ -3,6 +3,8 @@
 #endif
 #define _INC_account_core
 
+#include <pp-hooks>
+
 static enum e_ACCOUNT_DATA
 {
     E_ACCOUNT_ID,
@@ -234,7 +236,7 @@ public OnAccountCreateResult(playerid)
     return 1;
 }
 
-public OnGameModeExit()
+hook OnGameModeExit()
 {
     foreach (new i : Player) {
         if (IsPlayerConnected(i) && HasPlayerLogged(i)) {
@@ -244,51 +246,15 @@ public OnGameModeExit()
     }
 
     DisconnectFromDatabase();
-
-    #if defined AccountCore_OnGameModeExit
-        return AccountCore_OnGameModeExit();
-    #else
-        return 1;
-    #endif
 }
 
-#if defined _ALS_OnGameModeExit
-    #undef OnGameModeExit
-#else
-    #define _ALS_OnGameModeExit
-#endif
-
-#define OnGameModeExit AccountCore_OnGameModeExit
-
-#if defined AccountCore_OnGameModeExit
-    forward AccountCore_OnGameModeExit();
-#endif
-
-public OnPlayerConnect(playerid)
+hook OnPlayerConnect(playerid)
 {    
     SetPlayerLogged(playerid, false);
     SetPlayerLoginAttempts(playerid, 0);
 
     LoginBlockCheck(playerid);
-
-    #if defined AccountCore_OnPlayerConnect
-        return AccountCore_OnPlayerConnect(playerid);
-    #else
-        return 1;
-    #endif
 }
-
-#if defined _ALS_OnPlayerConnect
-    #undef OnPlayerConnect
-#else
-    #define _ALS_OnPlayerConnect
-#endif
-
-#define OnPlayerConnect AccountCore_OnPlayerConnect
-
-#if defined AccountCore_OnPlayerConnect
-    forward AccountCore_OnPlayerConnect(playerid);
-#endif
 
 forward OnLoginBlockChecked(playerid, bool:blocked, remainingSeconds);
 public OnLoginBlockChecked(playerid, bool:blocked, remainingSeconds)
@@ -306,39 +272,22 @@ public OnLoginBlockChecked(playerid, bool:blocked, remainingSeconds)
     return 1;
 }
 
-public OnPlayerRequestClass(playerid, classid)
+hook OnPlayerRequestClass(playerid, classid)
 {
     if (IsPlayerNPC(playerid)) {
         return 1;
     }
 
     TogglePlayerSpectating(playerid, true);
-
-    #if defined AccountCore_OnPlayerRequestClass
-        return AccountCore_OnPlayerRequestClass(playerid, classid)
-    #else
-        return 1;
-    #endif
+    return 1;
 }
 
-#if defined _ALS_OnPlayerRequestClass
-    #undef OnPlayerRequestClass
-#else
-    #define _ALS_OnPlayerRequestClass
-#endif
-
-#define OnPlayerRequestClass AccountCore_OnPlayerRequestClass
-
-#if defined AccountCore_OnPlayerRequestClass
-    forward AccountCore_OnPlayerRequestClass(playerid, classid);
-#endif
-
-public OnPlayerRequestSpawn(playerid)
+hook OnPlayerRequestSpawn(playerid)
 {
     return 0;
 }
 
-public OnPlayerDisconnect(playerid, reason)
+hook OnPlayerDisconnect(playerid, reason)
 {
     if (HasPlayerLogged(playerid)) {
         SaveAccount(playerid);
@@ -346,22 +295,4 @@ public OnPlayerDisconnect(playerid, reason)
     }
 
     SetPlayerLogged(playerid, false);
-
-    #if defined AccountCore_OnPlayerDisconnect
-        return AccountCore_OnPlayerDisconnect(playerid, reason);
-    #else
-        return 1;
-    #endif
 }
-
-#if defined _ALS_OnPlayerDisconnect
-    #undef OnPlayerDisconnect
-#else
-    #define _ALS_OnPlayerDisconnect
-#endif
-
-#define OnPlayerDisconnect AccountCore_OnPlayerDisconnect
-
-#if defined AccountCore_OnPlayerDisconnect
-    forward AccountCore_OnPlayerDisconnect(playerid, reason);
-#endif

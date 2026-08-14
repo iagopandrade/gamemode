@@ -3,6 +3,7 @@
 #endif
 #define _INC_CharacterCore
 
+#include <pp-hooks>
 
 #define DEFAULT_CHARACTER_SKIN      1
 #define DEFAULT_CHARACTER_POS_X     1723.0403
@@ -277,29 +278,11 @@ stock SaveCharacter(playerid)
     return 1;
 }
 
-public OnPlayerSpawn(playerid)
+hook OnPlayerSpawn(playerid)
 {
     if (HasPlayerLogged(playerid)) {
         GivePlayerMoney(playerid, GetCharacterCash(playerid));
         SetPlayerScore(playerid, GetCharacterScore(playerid));
         TogglePlayerControllable(playerid, true);
     }
-
-    #if defined CharacterCore_OnPlayerSpawn
-        return CharacterCore_OnPlayerSpawn(playerid);
-    #else
-        return 1;
-    #endif
 }
-
-#if defined _ALS_OnPlayerSpawn
-    #undef OnPlayerSpawn
-#else
-    #define _ALS_OnPlayerSpawn
-#endif
-
-#define OnPlayerSpawn CharacterCore_OnPlayerSpawn
-
-#if defined CharacterCore_OnPlayerSpawn
-    forward CharacterCore_OnPlayerSpawn(playerid);
-#endif
