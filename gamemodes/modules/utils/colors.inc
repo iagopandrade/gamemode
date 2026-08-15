@@ -44,3 +44,247 @@
 #define OOC_COLOR               (0xE0FFFFAA)
 #define SPEECH_BUBBLE_COLOR     (0xEEEEEEFF)
 #define WHISPER_COLOR           (0xFFFF00AA)
+/*
+static const ColorNames[][] =
+{
+    "WHITE",
+    "OFFWHITE",
+    "SNOW",
+    "BLACK",
+    "JETBLACK",
+    "GREY",
+    "DARKGREY",
+    "LIGHTGREY",
+    "SILVER",
+    "GAINSBORO",
+    "SLATEGREY",
+    "DARKSLATEGREY",
+
+    "RED",
+    "DARKRED",
+    "LIGHTRED",
+    "CRIMSON",
+    "FIREBRICK",
+    "MAROON",
+    "INDIANRED",
+    "SALMON",
+    "DARKSALMON",
+    "CORAL",
+    "TOMATO",
+
+    "ORANGE",
+    "DARKORANGE",
+    "LIGHTORANGE",
+    "PEACH",
+    "APRICOT",
+    "AMBER",
+
+    "YELLOW",
+    "DARKYELLOW",
+    "LIGHTYELLOW",
+    "GOLD",
+    "KHAKI",
+    "MUSTARD",
+    "LEMON",
+
+    "GREEN",
+    "DARKGREEN",
+    "LIGHTGREEN",
+    "FORESTGREEN",
+    "LIME",
+    "LIMEGREEN",
+    "OLIVE",
+    "DARKOLIVE",
+    "SEAGREEN",
+    "MINTGREEN",
+    "SPRINGGREEN",
+    "EMERALD",
+    "JADE",
+    "TEAGREEN",
+
+    "CYAN",
+    "DARKCYAN",
+    "LIGHTCYAN",
+    "TEAL",
+    "TURQUOISE",
+    "AQUAMARINE",
+    "AQUA",
+
+    "BLUE",
+    "DARKBLUE",
+    "LIGHTBLUE",
+    "NAVY",
+    "ROYALBLUE",
+    "SKYBLUE",
+    "DODGERBLUE",
+    "STEELBLUE",
+    "CORNFLOWERBLUE",
+    "POWDERBLUE",
+    "BABYBLUE",
+    "ICEBLUE",
+
+    "PURPLE",
+    "DARKPURPLE",
+    "LIGHTPURPLE",
+    "VIOLET",
+    "INDIGO",
+    "LAVENDER",
+    "ORCHID",
+    "PLUM",
+    "AMETHYST",
+
+    "PINK",
+    "HOTPINK",
+    "DEEPPINK",
+    "LIGHTPINK",
+    "MAGENTA",
+    "DARKMAGENTA",
+    "FUCHSIA",
+    "ROSE",
+
+    "BROWN",
+    "DARKBROWN",
+    "LIGHTBROWN",
+    "CHOCOLATE",
+    "SIENNA",
+    "BEIGE",
+    "TAN",
+    "WHEAT",
+    "BRONZE",
+    "COPPER",
+    "GOLDMETAL",
+    "SILVERMETAL",
+    "PLATINUM"
+};
+
+static const ColorValues[] =
+{
+    COLOR_WHITE,
+    COLOR_OFFWHITE,
+    COLOR_SNOW,
+    COLOR_BLACK,
+    COLOR_JETBLACK,
+    COLOR_GREY,
+    COLOR_DARKGREY,
+    COLOR_LIGHTGREY,
+    COLOR_SILVER,
+    COLOR_GAINSBORO,
+    COLOR_SLATEGREY,
+    COLOR_DARKSLATEGREY,
+
+    COLOR_RED,
+    COLOR_DARKRED,
+    COLOR_LIGHTRED,
+    COLOR_CRIMSON,
+    COLOR_FIREBRICK,
+    COLOR_MAROON,
+    COLOR_INDIANRED,
+    COLOR_SALMON,
+    COLOR_DARKSALMON,
+    COLOR_CORAL,
+    COLOR_TOMATO,
+
+    COLOR_ORANGE,
+    COLOR_DARKORANGE,
+    COLOR_LIGHTORANGE,
+    COLOR_PEACH,
+    COLOR_APRICOT,
+    COLOR_AMBER,
+
+    COLOR_YELLOW,
+    COLOR_DARKYELLOW,
+    COLOR_LIGHTYELLOW,
+    COLOR_GOLD,
+    COLOR_KHAKI,
+    COLOR_MUSTARD,
+    COLOR_LEMON,
+
+    COLOR_GREEN,
+    COLOR_DARKGREEN,
+    COLOR_LIGHTGREEN,
+    COLOR_FORESTGREEN,
+    COLOR_LIME,
+    COLOR_LIMEGREEN,
+    COLOR_OLIVE,
+    COLOR_DARKOLIVE,
+    COLOR_SEAGREEN,
+    COLOR_MINTGREEN,
+    COLOR_SPRINGGREEN,
+    COLOR_EMERALD,
+    COLOR_JADE,
+    COLOR_TEAGREEN,
+
+    COLOR_CYAN,
+    COLOR_DARKCYAN,
+    COLOR_LIGHTCYAN,
+    COLOR_TEAL,
+    COLOR_TURQUOISE,
+    COLOR_AQUAMARINE,
+    COLOR_AQUA,
+
+    COLOR_BLUE,
+    COLOR_DARKBLUE,
+    COLOR_LIGHTBLUE,
+    COLOR_NAVY,
+    COLOR_ROYALBLUE,
+    COLOR_SKYBLUE,
+    COLOR_DODGERBLUE,
+    COLOR_STEELBLUE,
+    COLOR_CORNFLOWERBLUE,
+    COLOR_POWDERBLUE,
+    COLOR_BABYBLUE,
+    COLOR_ICEBLUE,
+
+    COLOR_PURPLE,
+    COLOR_DARKPURPLE,
+    COLOR_LIGHTPURPLE,
+    COLOR_VIOLET,
+    COLOR_INDIGO,
+    COLOR_LAVENDER,
+    COLOR_ORCHID,
+    COLOR_PLUM,
+    COLOR_AMETHYST,
+
+    COLOR_PINK,
+    COLOR_HOTPINK,
+    COLOR_DEEPPINK,
+    COLOR_LIGHTPINK,
+    COLOR_MAGENTA,
+    COLOR_DARKMAGENTA,
+    COLOR_FUCHSIA,
+    COLOR_ROSE,
+
+    COLOR_BROWN,
+    COLOR_DARKBROWN,
+    COLOR_LIGHTBROWN,
+    COLOR_CHOCOLATE,
+    COLOR_SIENNA,
+    COLOR_BEIGE,
+    COLOR_TAN,
+    COLOR_WHEAT,
+    COLOR_BRONZE,
+    COLOR_COPPER,
+    COLOR_GOLDMETAL,
+    COLOR_SILVERMETAL,
+    COLOR_PLATINUM
+};
+
+stock ShowColorList(playerid)
+{
+    SendClientMessage(playerid, COLOR_WHITE, "========== COLOR LIST ==========");
+
+    for(new i = 0; i < sizeof(ColorNames); i++) {
+        SendClientMessage(playerid, "Hey, this is the color %s!", ColorValues[i]);
+    }
+
+    SendClientMessage(playerid, COLOR_WHITE, "========== END OF LIST ==========");
+    return 1;
+}
+
+flags:testcolor(CMD_LOGGED)
+CMD:testcolor(playerid, params[])
+{	
+    ShowColorList(playerid);
+    return 1;
+}
+*/
