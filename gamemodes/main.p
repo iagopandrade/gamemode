@@ -12,6 +12,7 @@
 #include <WeatherSystem>
 #include <gametext_plus>
 #define OVERRIDE_NATIVE_GAMETEXT
+#include <trunk_system>
 
 #include "modules/utils/colors"
 #include "modules/database/database"
