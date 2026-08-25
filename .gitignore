@@ -5,6 +5,9 @@
 *.amx
 
 components/
+
+dependencies/
+
 filterscripts/
 
 npcmodes/

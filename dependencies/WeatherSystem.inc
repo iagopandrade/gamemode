@@ -21,8 +21,8 @@
 	#endinput
 #endif
 #define _weathersystem_included
-#include <streamer>
-#include <foreach>
+#include "../dependencies/streamer"
+#include "../dependencies/foreach"
 
         // Definições
 #define E_WEATHER_CITYS  3

@@ -3,7 +3,6 @@
 #endif
 #define _INC_CharacterCore
 
-
 #define DEFAULT_CHARACTER_SKIN      1
 #define DEFAULT_CHARACTER_POS_X     1723.0403
 #define DEFAULT_CHARACTER_POS_Y     -1876.3651
