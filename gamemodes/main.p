@@ -26,6 +26,8 @@
 #include "modules/admin/admin"
 #include "modules/house/house"
 #include "modules/company/company"
+/* teste */
+#include "modules/baloon"
 
 public OnPlayerConnect(playerid)
 {
