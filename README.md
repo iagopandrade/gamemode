@@ -2,8 +2,6 @@
 
 # BPC Players' Community (BPC)
 
-### Um remake moderno do clássico servidor de Roleplay brasileiro Brasil Project City para open.mp
-
 ![Pawn](https://img.shields.io/badge/language-Pawn-orange)
 ![open.mp](https://img.shields.io/badge/platform-open.mp-blue)
 ![License](https://img.shields.io/github/license/BPC-Players-Community/gamemode)
@@ -17,9 +15,11 @@
 
 ## 📖 Sobre
 
-O **BPC Players' Community (BPC)** é um projeto open source que busca recriar a experiência clássica do Brasil Project City utilizando tecnologias modernas do **open.mp**.
+O **BPC Players' Community (BPC)** é um projeto que busca recriar a experiência de roleplay do Brasil Project City.
 
-O projeto foi desenvolvido com foco em código limpo, arquitetura modular e facilidade de manutenção, permitindo que a comunidade contribua com novas funcionalidades e melhorias.
+O projeto está sendo desenvolvido com foco em código limpo, arquitetura modular e facilidade de manutenção, permitindo que a comunidade contribua com novas funcionalidades e melhorias.
+
+> 💡 **Quer contribuir?** Veja o guia completo em [CONTRIBUTING.md](CONTRIBUTING.md). Ele explica como baixar o **Release** (necessário para ter o compilador e as dependências) e como compilar o projeto.
 
 ---
 
@@ -29,98 +29,25 @@ Em breve.
 
 ---
 
-## 🚧 Status
-
-O projeto encontra-se em desenvolvimento.
-
-### Implementado
-
-- Login
-- Registro
-- Banco
-- Chat local
-- Sistema de empresas
-- Binco
-- Sistema administrativo
-- Sistema de morte
-- Payday
-- Comandos RP
-
----
-
-## 🛠 Dependências
-
-Esta gamemode utiliza as seguintes bibliotecas e componentes:
-
-### 📦 Includes
-
-* open.mp
-* PawnPlus
-* Pawn.CMD
-* pp-hooks
-* y_unique
-* streamer
-* easyDialog
-* sscanf2
-* foreach
-* a_mysql
-* whirlpool
-* WeatherSystem
-* gametext_plus
-* mSelection
-
-> **Observação:** todas as includes necessárias já estão incluídas neste repositório. Não é necessário baixá-las separadamente.
-
-### 🔌 Plugins
-
-Os seguintes plugins devem ser instalados na pasta `plugins` do servidor:
-
-* **streamer** — https://github.com/samp-incognito/samp-streamer-plugin/releases
-* **sscanf2** — https://github.com/Y-Less/sscanf/releases
-* **whirlpool** — https://github.com/Southclaws/samp-whirlpool/releases
-* **PawnPlus** — https://github.com/IS4Code/PawnPlus/releases
-
-### ⚙️ Components
-
-Os componentes abaixo também são necessários:
-
-* **Pawn.CMD** — https://github.com/katursis/Pawn.CMD/releases
-
----
-
-## 🎯 Filosofia
-
-Este projeto busca preservar a nostalgia do antigo Brasil Project City, mas utilizando práticas modernas de desenvolvimento.
-
-A prioridade é:
-
-- Performance
-- Organização
-- Facilidade de manutenção
-- Facilidade de contribuição
-
----
-
 ## 👽 Contribuidores
 
-- [Kaleo](https://github.com/kaleoberserk)
-- [Iago](https://github.com/iagopandrade/gamemode)
+- [Kaleo](https://github.com/kaleoberserk) - Fundador e idealizador do projeto.
+- [Iago](https://github.com/iagopandrade) - Atual mantenedor.
 
-Toda contribuição é bem-vinda.
-
-Se você deseja ajudar no desenvolvimento do BPC, faça um Fork, implemente sua melhoria e envie um Pull Request.
+Toda contribuição é bem-vinda. Consulte o [CONTRIBUTING.md](CONTRIBUTING.md) para saber como ajudar.
 
 ---
 
 ## ❤️ Agradecimentos
 
-Agradecemos a todos os programadores do Brasil Project City que mantiveram aquele maravilhoso projeto.  
-- [Wili Macena](nao-sei)  
-- [Desenvolvedores do BPV]()
+Agradecemos a todos os programadores do Brasil Project City que mantiveram aquele maravilhoso projeto.
+
+- [Wili Macena](#) - Fundador do Brasil Project City.
+- [Desenvolvedores do BPV](#)
 - [Wal](https://github.com/Wall)
 - [Carlos Victor](https://github.com/CarlinCV)
 - [Jobim](https://github.com/Jobim17)
-- [Saints](nao-sei-o-github)
+- [Saints](https://github.com/SaintsDEV)
 
 ---
 
