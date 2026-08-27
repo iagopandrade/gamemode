@@ -34,3 +34,5 @@ omp-server
 *.xsl
 
 qawno/
+
+scriptfiles/
