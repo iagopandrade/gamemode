@@ -27,7 +27,7 @@ public OnPlayerText(playerid, text[])
     if (!HasPlayerLogged(playerid)) {
 		GameTextForPlayer(
 			playerid,
-			"~r~AVISO~n~~w~Voce precisa estar~n~logado para enviar mensagens!",
+			"~r~AVISO~n~~w~Você não está logado!",
 			10000, 16
 		);
         return 0;
@@ -118,4 +118,36 @@ static TalkMessage(Float:dist, playerid, const prefix[], message[])
 			}
 		}
 	}
+}
+
+stock LocalMessage(Float:dist, playerid, color, const message[], bool:chatbubble = false)
+{
+	if (!strlen(message)) {
+		return -1;
+	}
+
+	if (!IsPlayerConnected(playerid)) {
+		return 0;
+	}
+	
+	SendClientMessage(playerid, color, message);
+
+	if (chatbubble) {
+		SetPlayerChatBubble(playerid, message, color, dist, CHAT_BUBBLE_TIME);
+	}
+
+	new Float:fPlayerX, Float:fPlayerY, Float:fPlayerZ;
+	
+	GetPlayerPos(playerid, fPlayerX, fPlayerY, fPlayerZ);
+	
+	foreach (new i : Player) {
+		if (IsPlayerConnected(i) && (i != playerid) && IsPlayerStreamedIn(playerid, i)) {
+			new Float:fPlayerToPlayerDist = GetPlayerDistanceFromPoint(i, fPlayerX, fPlayerY, fPlayerZ);
+			
+			if (fPlayerToPlayerDist < dist) {
+				SendClientMessage(i, color, message);
+			}
+		}
+	}
+	return 1;
 }
