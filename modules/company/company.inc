@@ -3,7 +3,7 @@
 #endif
 #define _INC_company
 
-#include "modules/company/company_categories.inc"
-#include "modules/company/company_core.inc"
-#include "modules/company/company_dialogs.inc"
-#include "modules/company/company_commands.inc"
+#include "modules/company/categories.inc"
+#include "modules/company/core.inc"
+#include "modules/company/dialogs.inc"
+#include "modules/company/commands.inc"
