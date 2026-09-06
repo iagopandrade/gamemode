@@ -133,11 +133,17 @@ stock LocalMessage(Float:dist, playerid, color, const message[], bool:chatbubble
 	SendClientMessage(playerid, color, message);
 
 	if (chatbubble) {
-		SetPlayerChatBubble(playerid, message, color, dist, CHAT_BUBBLE_TIME);
+		new duration = TALK_ANIM_BASE_TIME + (strlen(message) * TALK_ANIM_PER_CHAR);
+
+        if (duration > TALK_ANIM_MAX_TIME) {
+            duration = TALK_ANIM_MAX_TIME;
+        }
+
+		SetPlayerChatBubble(playerid, message, color, dist, duration);
 	}
 
 	new Float:fPlayerX, Float:fPlayerY, Float:fPlayerZ;
-	
+
 	GetPlayerPos(playerid, fPlayerX, fPlayerY, fPlayerZ);
 	
 	foreach (new i : Player) {

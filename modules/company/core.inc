@@ -1523,11 +1523,18 @@ public OnPlayerPickUpDynamicPickup(playerid, STREAMER_TAG_PICKUP:pickupid)
     switch (type) {
         case E_ENTITY_COMPANY_ENTER_PICKUP: {
             if (!IsCompanyAvailable(companyid)) {
+                new playerName[MAX_PLAYER_NAME+1];
+                GetCharacterName(playerid, playerName, sizeof(playerName));
+
+                new string[144];
+                format(string, sizeof(string), "* %s está tentando abrir a porta", playerName);
+
                 if (IsCompanyLocked(companyid)) {
-                    SendClientMessage(playerid, -1, "A empresa esta trancada no momento.");
-                } else {
+                    LocalMessage(5.0, playerid, COLOR_ME, string, true);
+                    LocalMessage(5.0, playerid, COLOR_ME, "* A empresa está trancada.", false);
+                } /* else {
                     SendClientMessage(playerid, -1, "A empresa esta fechada no momento.");
-                }
+                } */
                 return 1;
             }
 
